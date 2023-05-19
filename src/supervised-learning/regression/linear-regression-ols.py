@@ -4,13 +4,9 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_absolute_error
-from sklearn.metrics import mean_squared_error
-from sklearn.metrics import r2_score
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 from sklearn.datasets import load_diabetes
-
-import matplotlib.pyplot as plt
 
 #Load data
 diabets = load_diabetes(as_frame=True)
