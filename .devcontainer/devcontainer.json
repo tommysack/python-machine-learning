@@ -1,0 +1,16 @@
+{
+	"name": "ML-py",
+	"image": "tommasosacramone/ml-py",
+	"workspaceFolder": "/home/ML-py",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/home/ML-py,type=bind,consistency=delegated",	
+	"settings": {
+		"terminal.integrated.shell.linux": "/bin/bash"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python"
+			]
+		}
+	},
+}
