@@ -9,10 +9,20 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.datasets import load_diabetes
 
 #Load data
-diabets = load_diabetes(as_frame=True)
+diabets = load_diabetes(as_frame=True) #10 patients variables X and 1 quantitative Y measure of disease progression one year after
 
 #General info
-print(diabets.DESCR)
+print(diabets.DESCR) #10 patients variables X and 1 quantitative Y measure of disease progression one year after
+diabets_df = pd.DataFrame(diabets.data)
+diabets_df['target'] = diabets.target
+diabets_df.head()
+diabets_df.describe() 
+diabets_df.shape #11 columns, 442 rows
+
+#Correlation between data/target (corr function works only for numbers)
+diabets_df.isnull().sum() 
+np.isnan(diabets_df).any() 
+diabets_df.corr()['target'].sort_values() #No special correlation with target
 
 '''
 The data are points in an hyperspace H of 11 dimensions.
@@ -24,10 +34,6 @@ In this case we use LinearRegression that use a Closed-Form solution trying to m
 #Separates data in Dataframe/Series columns data/target 
 X = diabets.data 
 Y = diabets.target 
-
-#Check columns correlated (corr function works only for numbers)
-np.isnan(X).any() #Check only numbers
-X.corr() # Only s1 and s2 > 0.85
 
 #Separates data in rows train/test
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_state=0)
