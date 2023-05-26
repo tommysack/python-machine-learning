@@ -20,8 +20,7 @@ digits_df.shape #65 columns, 1797 rows
 '''
 The data are points in an hyperspace H of 65 dimensions.
 The goal is to assign a class label Y (classification with values 0..9) to input X.
-Technically you need to find the "best" hyperplane, then the linear function f (weights and biases), in H.
-In this case we use LinearRegression that use a Closed-Form solution trying to minimize the sum of squared residuals OLS.
+
 '''
 
 #Separates data in Dataframe/Series columns data/target 
