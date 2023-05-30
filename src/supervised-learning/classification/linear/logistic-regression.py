@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -24,18 +25,29 @@ breast_cancer_df.isnull().sum()
 np.isnan(breast_cancer_df.drop('diagnosis',axis=1)).any()
 diagnosis_mapping = {'B': 0, 'M': 1}
 breast_cancer_df['diagnosis_numbers'] = breast_cancer_df['diagnosis'].map(diagnosis_mapping)
-breast_cancer_df.drop('diagnosis', axis=1).corr()['diagnosis_numbers'].sort_values() 
-'''
-The features "concave points_worst" and "perimeter_worst" results best correlated with target diagnosis
-'''
+breast_cancer_df.drop('diagnosis', axis=1).corr()['diagnosis_numbers'].sort_values() #Only concave points_worst and perimeter_worst
 #Correlation between "concave points_worst" and "perimeter_worst" to exclude duplicate feature 
 breast_cancer_df.drop('diagnosis', axis=1).corr()['concave points_worst'].sort_values() 
 breast_cancer_df.drop('diagnosis', axis=1).corr()['perimeter_worst'].sort_values() 
 
+plt.figure(figsize=(6, 6))
+sns.regplot(data=breast_cancer_df, x='concave points_worst', y='diagnosis_numbers', logistic=True)
+plt.title('Correlation between concave points_worst and diagnosis numbers')
+plt.xlabel('concave points_worst')
+plt.ylabel('diagnosis numbers')
+plt.show()
+
+plt.figure(figsize=(6, 6))
+sns.regplot(data=breast_cancer_df, x='perimeter_worst', y='diagnosis_numbers', logistic=True)
+plt.title('Correlation between perimeter_worst and diagnosis numbers')
+plt.xlabel('perimeter_worst')
+plt.ylabel('diagnosis numbers')
+plt.show()
+
 '''
 The data are points in an hyperspace H of 32 dimensions.
 The goal is to assign a class label Y (binary classification with values "M" or "B") to input X.
-Technically you need to find the "best" hyperplane which best separates the points classified in H.
+Technically you need to find the "best" hyperplane of 31 dimensions which best separates the points classified in H.
 In this case we use LogisticRegression that use LBFGS method (Gradient Ascent to maximize Likelihood) and returns
 the probability between 0 and 1 that a point belongs to a class (using sigmoid function).
 '''
@@ -66,17 +78,36 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-logistic_regression = LogisticRegression() #solver='lbfgs'
+logistic_regression = LogisticRegression(penalty='l2', C=10.0, solver='lbfgs') #l2 regularisation to avoid overfitting, C inverse of regularization strength
 logistic_regression.fit(X_train, Y_train) #Building the model
-Y_train_predicted = logistic_regression.predict(X_train) #To calculate model's overfitting
 
-Y_test_predicted = logistic_regression.predict(X_test) #Predict Y_test from X_test
+Y_train_predicted = logistic_regression.predict(X_train) #To calculate model's overfitting
+Y_train_predicted_proba = logistic_regression.predict_proba(X_train) #To calculate model's overfitting
+
+#Model overfitting evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+print("\nModel overfitting evaluation")
+print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
+print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) #Best possible score is 0
+
+Y_test_predicted = logistic_regression.predict(X_test) 
 Y_test_predicted_proba = logistic_regression.predict_proba(X_test) #To calculate LOG LOSS
 
 #Model evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
 print("\nModel evaluation")
 print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
-print("ACCURACY \"overfitting\" SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
 print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 0
+
+'''
+Both metrics suggest that the Logistic Regression model is correct.
+Could be improved the moderate overfitting.
+'''
+
+#Try to predict a new case
+x=[[-0.85095647, -0.48784158]]
+y_predicted = logistic_regression.predict(x)
+y_predicted_proba = logistic_regression.predict_proba(x)
+print("\nDiagnosis: ", y_predicted[0])
+print("Probability class 0: ", y_predicted_proba[0][0])
+print("Probability class 1: ", y_predicted_proba[0][1])
 
 

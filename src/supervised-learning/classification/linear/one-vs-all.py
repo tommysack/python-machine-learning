@@ -20,7 +20,10 @@ digits_df.shape #65 columns, 1797 rows
 '''
 The data are points in an hyperspace H of 65 dimensions.
 The goal is to assign a class label Y (classification with values 0..9) to input X.
-
+Multi-classification can be split into multiple binary classifier method (building one model for every single class, 
+predicting a new case over every model and taking the model with higher probability).
+In this case we use LogisticRegression that use LBFGS method (Gradient Ascent to maximize Likelihood) and returns
+the probability between 0 and 1 that a point belongs to a class (using sigmoid function).
 '''
 
 #Separates data in Dataframe/Series columns data/target 
@@ -49,17 +52,27 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-logistic_regression = LogisticRegression() #solver='lbfgs'
+logistic_regression = LogisticRegression(penalty='l2', C=0.1, solver='lbfgs') #l2 regularisation to avoid overfitting, C inverse of regularization strength
 logistic_regression.fit(X_train, Y_train) #Building the model
-Y_train_predicted = logistic_regression.predict(X_train) #To calculate model's overfitting
 
-Y_test_predicted = logistic_regression.predict(X_test) #Predict Y_test from X_test
+Y_train_predicted = logistic_regression.predict(X_train) #To calculate model's overfitting
+Y_train_predicted_proba = logistic_regression.predict_proba(X_train) #To calculate model's overfitting
+
+#Model overfitting evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+print("\nModel overfitting evaluation")
+print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
+print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) #Best possible score is 0
+
+Y_test_predicted = logistic_regression.predict(X_test) 
 Y_test_predicted_proba = logistic_regression.predict_proba(X_test) #To calculate LOG LOSS
 
 #Model evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
 print("\nModel evaluation")
 print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
-print("ACCURACY \"overfitting\" SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
 print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 0
 
+'''
+Both metrics suggest that the Logistic Regression model is correct.
+Could be improved the moderate overfitting.
+'''
 
