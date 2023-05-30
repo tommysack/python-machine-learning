@@ -50,7 +50,7 @@ So let's try with polynomial regression.
 The data are points in an hyperspace H of 11 dimensions.
 The goal is to predict the value of the target column Y from the columns X as well as possible. 
 Technically you need to find the "best" curved surface  of 10 dimensions, then the best polynomial function f (weights and biases), in the H.
-In this case we use LinearRegression that use a Closed-Form solution trying to minimize the sum of squared residuals OLS.
+The "best": in this case we use LinearRegression that use a Closed-Form solution trying to minimize the sum of squared residuals OLS.
 '''
 
 #Separates data in Dataframe/Series columns data/target 

@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
+from sklearn.svm import LinearSVC
 from sklearn.metrics import accuracy_score, log_loss
 
 #Load data
@@ -48,8 +48,10 @@ plt.show()
 The data are points in an hyperspace H of 32 dimensions.
 The goal is to assign a class label Y (binary classification with values "M" or "B") to input X.
 Technically you need to find the "best" hyperplane of 31 dimensions which best separates the points classified in H.
-In this case we use LogisticRegression that use LBFGS method (Gradient Ascent to maximize Likelihood) and returns
-the probability between 0 and 1 that a point belongs to a class (using sigmoid function).
+The "best": in this case we use LinearSVC (support vector machines) that use Gradient Descent to minimize loss function.
+Behind the scenes it working finds hyperplane that maximise the width between the two categories. 
+It make a non-probabilistic binary (but is possible multi-class one vs all) linear (but can perform non-linear using kernel) 
+classifier. 
 '''
 
 #Separates data in numpy.ndarray columns data/target 
@@ -57,7 +59,7 @@ X = breast_cancer_df[["concave points_worst","perimeter_worst"]].values
 Y = breast_cancer_df['diagnosis_numbers'].values 
 
 #Separates data in rows train/test
-X_train, X_test, Y_train, Y_test = train_test_split(X,Y, test_size=0.3, random_state=0)
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y, test_size=0.05, random_state=0)
 
 #Check if X needs to scaling
 print("\nBEFORE scaling")
@@ -78,36 +80,27 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-logistic_regression = LogisticRegression(penalty='l2', C=10.0, solver='lbfgs') #l2 regularisation to avoid overfitting, C inverse of regularization strength
-logistic_regression.fit(X_train, Y_train) #Building the model
+svc = LinearSVC(penalty='l2', C=0.0001)
+svc.fit(X_train, Y_train) #Building the model
 
-Y_train_predicted = logistic_regression.predict(X_train) #To calculate model's overfitting
-Y_train_predicted_proba = logistic_regression.predict_proba(X_train) #To calculate model's overfitting
+Y_train_predicted = svc.predict(X_train) #To calculate model's overfitting
 
-#Model overfitting evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+#Model overfitting evaluation (the percentage of samples that were correctly classified)
 print("\nModel overfitting evaluation")
 print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) #Best possible score is 0
 
-Y_test_predicted = logistic_regression.predict(X_test) 
-Y_test_predicted_proba = logistic_regression.predict_proba(X_test) #To calculate LOG LOSS
+Y_test_predicted = svc.predict(X_test) 
 
-#Model evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+#Model evaluation (the percentage of samples that were correctly classified)
 print("\nModel evaluation")
 print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 0
 
 '''
-Both metrics suggest that the Logistic Regression model is correct.
-Could be improved the moderate overfitting.
+Accuracy suggest that the Support Vector Machine model is appropriate.
+To decrease overfitting, in addition to using regularization L2, i have decreased the percentage of training cases.
 '''
 
 #Try to predict a new case
 x=[[-0.85095647, -0.48784158]]
-y_predicted = logistic_regression.predict(x)
-y_predicted_proba = logistic_regression.predict_proba(x)
+y_predicted = svc.predict(x)
 print("\nDiagnosis: ", y_predicted[0])
-print("Probability class 0: ", y_predicted_proba[0][0])
-print("Probability class 1: ", y_predicted_proba[0][1])
-
-

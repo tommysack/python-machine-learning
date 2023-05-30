@@ -20,10 +20,9 @@ digits_df.shape #65 columns, 1797 rows
 '''
 The data are points in an hyperspace H of 65 dimensions.
 The goal is to assign a class label Y (classification with values 0..9) to input X.
-Multi-classification can be split into multiple binary classifier method (building one model for every single class, 
+The one vs all approach consists in to split a multi-classification problem into multiple binary classifier method (building one model for every single class, 
 predicting a new case over every model and taking the model with higher probability).
-In this case we use LogisticRegression that use LBFGS method (Gradient Ascent to maximize Likelihood) and returns
-the probability between 0 and 1 that a point belongs to a class (using sigmoid function).
+In this case we use LogisticRegression that use LBFGS method (Gradient Ascent to maximize Likelihood).
 '''
 
 #Separates data in Dataframe/Series columns data/target 
@@ -31,7 +30,7 @@ X = digits.data
 Y = digits.target 
 
 #Separates data in rows train/test
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_state=0)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.05, random_state=0)
 
 #Check if X needs to scaling (makes it easy for a model to learn and understand the problem)
 print("\nBEFORE scaling")
@@ -72,7 +71,7 @@ print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possib
 print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 0
 
 '''
-Both metrics suggest that the Logistic Regression model is correct.
-Could be improved the moderate overfitting.
+Both metrics suggest that the Logistic Regression model is appropriate.
+To decrease overfitting, in addition to using regularization L2, i have decreased the percentage of training cases.
 '''
 
