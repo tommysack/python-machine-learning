@@ -1,0 +1,9 @@
+#Data
+data/
+
+# Compiled Python bytecode
+*.py[cod]
+
+# Log files
+*.log
+

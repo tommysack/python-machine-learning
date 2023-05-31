@@ -16,6 +16,8 @@ digits_df['target'] = digits.target
 digits_df.head()
 digits_df.describe() 
 digits_df.shape #65 columns, 1797 rows
+digits_df.isnull().sum() 
+np.isnan(digits_df).any() #Many algorithms do work only with numerical data
 
 '''
 The data are points in an hyperspace H of 65 dimensions.
@@ -30,7 +32,7 @@ X = digits.data
 Y = digits.target 
 
 #Separates data in rows train/test
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.03, random_state=0)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.1, random_state=0)
 
 #Check if X needs to scaling (makes it easy for a model to learn and understand the problem)
 print("\nBEFORE scaling")
@@ -68,5 +70,4 @@ print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possib
 
 '''
 Accuracy suggest that the Logistic Regression model is appropriate.
-To decrease overfitting, in addition to using regularization L2, i have decreased the percentage of training cases.
 '''

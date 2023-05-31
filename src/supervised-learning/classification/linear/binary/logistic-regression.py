@@ -18,11 +18,10 @@ breast_cancer_df.describe()
 breast_cancer_df.shape #32 columns, 569 rows
 breast_cancer_df['diagnosis'].unique() #array(['M', 'B'], dtype=object) => binary classification
 sns.countplot(data=breast_cancer_df, x='diagnosis') #Ok, the classes are quite distributed
-breast_cancer_df.isnull().sum() #Check no null 
+breast_cancer_df.isnull().sum() 
+np.isnan(breast_cancer_df.drop('diagnosis',axis=1)).any() #Many algorithms do work only with numerical data
 
 #Correlation between data/target (corr function works only for numbers)
-breast_cancer_df.isnull().sum() 
-np.isnan(breast_cancer_df.drop('diagnosis',axis=1)).any()
 diagnosis_mapping = {'B': 0, 'M': 1}
 breast_cancer_df['diagnosis_numbers'] = breast_cancer_df['diagnosis'].map(diagnosis_mapping)
 breast_cancer_df.drop('diagnosis', axis=1).corr()['diagnosis_numbers'].sort_values() #Only concave points_worst and perimeter_worst
@@ -55,10 +54,10 @@ binary (but is possible multi-class one vs all) linear classifier.
 
 #Separates data in numpy.ndarray columns data/target 
 X = breast_cancer_df[["concave points_worst","perimeter_worst"]].values 
-Y = breast_cancer_df['diagnosis_numbers'].values 
+Y = breast_cancer_df["diagnosis_numbers"].values 
 
 #Separates data in rows train/test
-X_train, X_test, Y_train, Y_test = train_test_split(X,Y, test_size=0.05, random_state=0)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.1, random_state=0)
 
 #Check if X needs to scaling
 print("\nBEFORE scaling")
@@ -100,7 +99,6 @@ print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible sco
 
 '''
 Both metrics suggest that the Logistic Regression model is correct.
-To decrease overfitting, in addition to using regularization L2, i have decreased the percentage of training cases.
 '''
 
 #Try to predict a new case

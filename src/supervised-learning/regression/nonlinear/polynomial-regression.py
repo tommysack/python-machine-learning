@@ -20,11 +20,10 @@ diabets_df['progression'] = diabets.target
 diabets_df.head()
 diabets_df.describe() 
 diabets_df.shape #11 columns, 442 rows
+diabets_df.isnull().sum() 
+np.isnan(diabets_df).any() #Many algorithms do work only with numerical data
 
 #Correlation between data/target (corr function works only for numbers)
-
-diabets_df.isnull().sum() 
-np.isnan(diabets_df).any() 
 diabets_df.corr()['progression'].sort_values() #Moderate correlation with ltg and bmi, try to draw linear regression model fit
 #Correlation between "ltg" and "bmi" to exclude duplicate feature 
 diabets_df.corr()['ltg'].sort_values() 
