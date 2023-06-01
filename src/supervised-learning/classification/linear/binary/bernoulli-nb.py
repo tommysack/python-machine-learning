@@ -38,9 +38,9 @@ bernoulli = BernoulliNB()
 #BernoulliNB is designed for binary/boolean features, than we need one-hot encoding. 
 #We can encode X with "bag of words" CountVectorizer using binary=True parameter (One-hot).
 #It returns scipy.sparse._csr.csr_matrix that is allowed for train_test_split 
-vectorizer = CountVectorizer(binary=True, stop_words='english', lowercase=True)
+count_vectorizer = CountVectorizer(binary=True, stop_words='english', lowercase=True)
 
-X_train_vector = vectorizer.fit_transform(X_train) 
+X_train_vector = count_vectorizer.fit_transform(X_train) 
 
 bernoulli.fit(X_train_vector, Y_train) #Building model
 
@@ -50,7 +50,7 @@ Y_train_predicted = bernoulli.predict(X_train_vector)
 print("\nModel overfitting evaluation")
 print("F1 SCORE: ", metrics.f1_score(Y_train, Y_train_predicted, average='macro')) #Best possible score is 1.0
 
-X_test_vector = vectorizer.transform(X_test)
+X_test_vector = count_vectorizer.transform(X_test)
 
 Y_test_predicted = bernoulli.predict(X_test_vector)
 
@@ -65,7 +65,7 @@ The metric makes me think that there is moderate overfitting.
 #Try to predict a new case
 
 x = ["I liked soundtrack, photography and the cast but the film was really long and it lacked of a good plot."]
-x = vectorizer.transform(x)
+x = count_vectorizer.transform(x)
 
 y = bernoulli.predict(x)
 print("\nSentiment analysis of review: ", y[0])

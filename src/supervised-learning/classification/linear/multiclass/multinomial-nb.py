@@ -28,7 +28,7 @@ news_test = fetch_20newsgroups(subset="test")
 X_test = news_test.data 
 Y_test = news_test.target
 
-multinomial = MultinomialNB()
+multinomial = MultinomialNB(alpha=1)
 
 #MultinomialNB is designed for integer feature counts, than we need encoding. 
 #We can encode X with "bag of words" CountVectorizer.
@@ -38,9 +38,9 @@ multinomial = MultinomialNB()
 #The words that appears once have higher score than those that appears most frequently.
 
 #TfidfTransformer = CountVectorizer + TfidfTransformer
-vectorizer = TfidfVectorizer()
+tfidf_vectorizer = TfidfVectorizer()
 
-X_train_vector = vectorizer.fit_transform(X_train) 
+X_train_vector = tfidf_vectorizer.fit_transform(X_train) 
 
 multinomial.fit(X_train_vector, Y_train)
 
@@ -50,7 +50,7 @@ Y_train_predicted = multinomial.predict(X_train_vector)
 print("\nModel overfitting evaluation")
 print("F1 SCORE: ", metrics.f1_score(Y_train, Y_train_predicted, average='macro')) #Best possible score is 1.0
 
-X_test_vector = vectorizer.transform(X_test)
+X_test_vector = tfidf_vectorizer.transform(X_test)
 
 Y_test_predicted = multinomial.predict(X_test_vector)
 
@@ -64,7 +64,7 @@ The metric makes me think that there is moderate overfitting.
 
 #Try to predict a new case
 x = ["The Italy will have to vote for the political elections"]
-x_vector = vectorizer.transform(x)
+x_vector = tfidf_vectorizer.transform(x)
 y = multinomial.predict(x_vector)
 print("\nCategory of doc: ", news.target_names[y[0]])
     
