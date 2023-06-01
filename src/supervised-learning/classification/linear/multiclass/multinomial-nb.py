@@ -1,4 +1,5 @@
 import pandas as pd
+import seaborn as sns
 from sklearn import metrics
 from sklearn.datasets import fetch_20newsgroups
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -12,6 +13,10 @@ print(news.DESCR) #20 newsgroups dataset (18000 newsgroups)
 news.target_names #All categories labels
 news.data[10] #Content of article with index 10
 news.target[10] #Category of article with index 10
+news_df = pd.DataFrame(news.data)
+news_df['category'] = news.target
+sns.countplot(data=news_df, x='category') #Ok, the classes are quite distributed
+news_df.isnull().sum()
 
 '''
 The data are articles in natural language.
