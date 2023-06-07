@@ -22,7 +22,7 @@ reviews_df.isnull().sum()
 '''
 The data are phrases in natural language.
 The goal is to assign a class label Y (binary classification with values "pos" or "neg") to input X.
-In this case we use BernoulliNB that use Naive Bayes algorithm.
+In this case we use BernoulliNB that use Naive Bayes algorithm and it works on Bernoulli distribution.
 It makes a binary classifier. 
 '''
 
@@ -38,7 +38,7 @@ bernoulli = BernoulliNB()
 #BernoulliNB is designed for binary/boolean features, than we need one-hot encoding. 
 #We can encode X with "bag of words" CountVectorizer using binary=True parameter (One-hot).
 #It returns scipy.sparse._csr.csr_matrix that is allowed for train_test_split 
-count_vectorizer = CountVectorizer(binary=True, stop_words='english', lowercase=True)
+count_vectorizer = CountVectorizer(binary=True, lowercase=True, stop_words='english')
 
 X_train_vector = count_vectorizer.fit_transform(X_train) 
 

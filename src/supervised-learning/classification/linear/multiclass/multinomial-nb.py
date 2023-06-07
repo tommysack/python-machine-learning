@@ -5,6 +5,9 @@ from sklearn.datasets import fetch_20newsgroups
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 
+import nltk
+import gensim
+
 #Load data
 news = fetch_20newsgroups(random_state=42)
 
@@ -21,7 +24,7 @@ news_df.isnull().sum()
 '''
 The data are articles in natural language.
 The goal is to assign a class label Y (multi-class classification with values news_train.target_names) to input X.
-In this case we use MultinomialNB that use Naive Bayes algorithm.
+In this case we use MultinomialNB that use Naive Bayes algorithm and it works on Multinomial distribution.
 It makes a multi-class classifier. 
 '''
 
@@ -42,8 +45,24 @@ multinomial = MultinomialNB(alpha=1)
 #It rankes a word in a doc, based on the frequency that the word appears in all docs.
 #The words that appears once have higher score than those that appears most frequently.
 
-#TfidfTransformer = CountVectorizer + TfidfTransformer
-tfidf_vectorizer = TfidfVectorizer()
+#I decide to use TfidfTransformer = CountVectorizer + TfidfTransformer
+
+#I also decided to process and tokenized the news with Stemmer and Lemmatizer
+
+nltk.download('wordnet') #Import dictionary
+lemmatizer = nltk.stem.WordNetLemmatizer() #words in third person, verbs in past/future, ...
+stemmer = nltk.stem.SnowballStemmer("english") #to  map different forms of the same word to a stem
+
+def tokenizer(text):
+  tokens = gensim.utils.simple_preprocess(text)
+  tokens_processed = []
+  for token in tokens :
+    token_lemma = lemmatizer.lemmatize(token, pos='v')
+    token_lemma_stemma = stemmer.stem(token_lemma)
+    tokens.append(token_lemma_stemma)            
+  return tokens_processed
+
+tfidf_vectorizer = TfidfVectorizer(lowercase=True, tokenizer=tokenizer, stop_words='english')
 
 X_train_vector = tfidf_vectorizer.fit_transform(X_train) 
 
