@@ -1,6 +1,6 @@
 import pandas as pd
 import seaborn as sns
-from sklearn import metrics
+from sklearn.metrics import f1_score, log_loss
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import BernoulliNB
@@ -45,18 +45,22 @@ X_train_vector = count_vectorizer.fit_transform(X_train)
 bernoulli.fit(X_train_vector, Y_train) #Building model
 
 Y_train_predicted = bernoulli.predict(X_train_vector)
+Y_train_predicted_proba = bernoulli.predict_proba(X_train_vector)
 
 #Model overfitting evaluation (the Harmonic Precision-Recall Mean)
 print("\nModel overfitting evaluation")
-print("F1 SCORE: ", metrics.f1_score(Y_train, Y_train_predicted, average='macro')) #Best possible score is 1.0
+print("F1 SCORE: ", f1_score(Y_train, Y_train_predicted, average='macro')) #Best possible score is 1.0
+print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) #Best possible score is 1.0
 
 X_test_vector = count_vectorizer.transform(X_test)
 
 Y_test_predicted = bernoulli.predict(X_test_vector)
+Y_test_predicted_proba = bernoulli.predict_proba(X_test_vector)
 
 #Model evaluation (the Harmonic Precision-Recall Mean)
 print("\nModel evaluation")
-print("F1 SCORE: ", metrics.f1_score(Y_test, Y_test_predicted, average='macro')) #Best possible score is 1.0
+print("F1 SCORE: ", f1_score(Y_test, Y_test_predicted, average='macro')) #Best possible score is 1.0
+print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 1.0
 
 '''
 The model would appear moderately overfitted for this problem.

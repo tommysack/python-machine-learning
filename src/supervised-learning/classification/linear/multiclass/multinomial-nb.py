@@ -1,6 +1,6 @@
 import pandas as pd
 import seaborn as sns
-from sklearn import metrics
+from sklearn.metrics import f1_score, log_loss
 from sklearn.datasets import fetch_20newsgroups
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
@@ -25,7 +25,7 @@ news_df.isnull().sum()
 The data are articles in natural language.
 The goal is to assign a class label Y (multi-class classification with values news_train.target_names) to input X.
 In this case we use MultinomialNB that use Naive Bayes algorithm and it works on Multinomial distribution.
-It makes a multi-class classifier. 
+It makes a probabilistic multi-class classifier. 
 '''
 
 #Separates data in rows train/test
@@ -49,38 +49,50 @@ multinomial = MultinomialNB(alpha=1)
 
 #I also decided to process and tokenized the news with Stemmer and Lemmatizer
 
-nltk.download('wordnet') #Import dictionary
-lemmatizer = nltk.stem.WordNetLemmatizer() #words in third person, verbs in past/future, ...
-stemmer = nltk.stem.SnowballStemmer("english") #to  map different forms of the same word to a stem
+# nltk.download('wordnet') #Import dictionary
+# lemmatizer = nltk.stem.WordNetLemmatizer() #words in third person, verbs in past/future, ...
+# stemmer = nltk.stem.SnowballStemmer("english") #to  map different forms of the same word to a stem
 
-def tokenizer(text):
-  tokens = gensim.utils.simple_preprocess(text)
-  tokens_processed = []
-  for token in tokens :
-    token_lemma = lemmatizer.lemmatize(token, pos='v')
-    token_lemma_stemma = stemmer.stem(token_lemma)
-    tokens.append(token_lemma_stemma)            
-  return tokens_processed
+# def tokenizer(text):
+#   print("START Simple preprocess...")
+#   tokens = gensim.utils.simple_preprocess(text)
+#   print("END Simple preprocess...")
+#   tokens_processed = []
+#   for token in tokens :
+#     print("START Lemma...")
+#     token_lemma = lemmatizer.lemmatize(token, pos='v')
+#     print("END Lemma...")
+#     print("START Stemma...")
+#     token_lemma_stemma = stemmer.stem(token_lemma)
+#     print("END Stemma...")
+#     tokens.append(token_lemma_stemma)            
+#   return tokens_processed
 
-tfidf_vectorizer = TfidfVectorizer(lowercase=True, tokenizer=tokenizer, stop_words='english')
+#tfidf_vectorizer = TfidfVectorizer(lowercase=True, tokenizer=tokenizer, stop_words='english')
+tfidf_vectorizer = TfidfVectorizer(lowercase=True, stop_words='english')
 
 X_train_vector = tfidf_vectorizer.fit_transform(X_train) 
 
 multinomial.fit(X_train_vector, Y_train)
 
 Y_train_predicted = multinomial.predict(X_train_vector)
+Y_train_predicted_proba = multinomial.predict_proba(X_train_vector)
 
 #Model overfitting evaluation (the Harmonic Precision-Recall Mean)
 print("\nModel overfitting evaluation")
-print("F1 SCORE: ", metrics.f1_score(Y_train, Y_train_predicted, average='macro')) #Best possible score is 1.0
+print("F1 SCORE: ", f1_score(Y_train, Y_train_predicted, average='macro')) #Best possible score is 1.0
+print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) #Best possible score is 1.0
 
 X_test_vector = tfidf_vectorizer.transform(X_test)
 
 Y_test_predicted = multinomial.predict(X_test_vector)
+Y_test_predicted_proba = multinomial.predict_proba(X_test_vector)
 
 #Model evaluation (the Harmonic Precision-Recall Mean)
 print("\nModel evaluation")
-print("F1 SCORE: ", metrics.f1_score(Y_test, Y_test_predicted, average='macro')) #Best possible score is 1.0
+print("F1 SCORE: ", f1_score(Y_test, Y_test_predicted, average='macro')) #Best possible score is 1.0
+print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 1.0
+
 
 '''
 The model would appear moderately overfitted for this problem.

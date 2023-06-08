@@ -6,7 +6,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score, log_loss
+from sklearn.metrics import accuracy_score
 
 #Load data
 breast_cancer = load_breast_cancer()
@@ -25,7 +25,7 @@ np.isnan(breast_cancer_df.drop('diagnosis',axis=1)).any() #Many algorithms do wo
 
 #Correlation between data/target (corr function works only for numbers)
 breast_cancer_df.corr()['diagnosis'].sort_values() #Only mean fractal dimension and smoothness error
-#Correlation between "concave points_worst" and "perimeter_worst" to exclude duplicate feature 
+#Correlation between "mean fractal dimension" and "smoothness error" to exclude duplicate feature 
 breast_cancer_df.corr()['mean fractal dimension'].sort_values() 
 breast_cancer_df.corr()['smoothness error'].sort_values() 
 
@@ -89,20 +89,16 @@ for K in num_neighbors:
   kn_classifier.fit(X_train,Y_train)
 
   Y_train_predicted = kn_classifier.predict(X_train)
-  Y_train_predicted_proba = kn_classifier.predict_proba(X_train)  
 
   #Model overfitting evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
   print("\nModel overfitting evaluation")
   print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
-  print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) #Best possible score is 0
   
   Y_test_predicted = kn_classifier.predict(X_test)
-  Y_test_predicted_proba = kn_classifier.predict_proba(X_test)
   
   #Model evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
   print("\nModel evaluation")
   print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
-  print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 0
 
 '''
 The model would appear to be appropriate for this problem.

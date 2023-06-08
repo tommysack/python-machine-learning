@@ -25,7 +25,7 @@ np.isnan(breast_cancer_df.drop('diagnosis',axis=1)).any() #Many algorithms do wo
 
 #Correlation between data/target (corr function works only for numbers)
 breast_cancer_df.corr()['diagnosis'].sort_values() #Only mean fractal dimension and smoothness error
-#Correlation between "concave points_worst" and "perimeter_worst" to exclude duplicate feature 
+#Correlation between "mean fractal dimension" and "smoothness error" to exclude duplicate feature 
 breast_cancer_df.corr()['mean fractal dimension'].sort_values() 
 breast_cancer_df.corr()['smoothness error'].sort_values() 
 
