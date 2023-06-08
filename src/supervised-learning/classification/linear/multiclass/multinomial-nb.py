@@ -5,8 +5,8 @@ from sklearn.datasets import fetch_20newsgroups
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 
-import nltk
-import gensim
+#import nltk
+#import gensim
 
 #Load data
 news = fetch_20newsgroups(random_state=42)
