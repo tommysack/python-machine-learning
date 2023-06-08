@@ -107,7 +107,7 @@ for degree_current in range (2, 6): #Starts from 2, since 1 is Linear Regression
     
 '''
 R2 score is growing in train, but gets worse in test: overfitting.
-Polynomial Regression isn't appropriate for this case. 
+The model would appear to be inappropriate for this problem.
 '''
 
 

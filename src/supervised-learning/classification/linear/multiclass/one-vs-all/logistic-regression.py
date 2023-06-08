@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import seaborn as sns
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
@@ -16,6 +17,7 @@ digits_df['target'] = digits.target
 digits_df.head()
 digits_df.describe() 
 digits_df.shape #65 columns, 1797 rows
+sns.countplot(data=digits_df, x='target') #Ok, the classes are quite distributed
 digits_df.isnull().sum() 
 np.isnan(digits_df).any() #Many algorithms do work only with numerical data
 
@@ -73,6 +75,6 @@ print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possib
 print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 0
 
 '''
-Both metrics suggest that the Logistic Regression model is appropriate.
+The model would appear to be appropriate for this problem.
 '''
 

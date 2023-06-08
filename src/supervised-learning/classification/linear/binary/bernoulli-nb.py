@@ -23,7 +23,7 @@ reviews_df.isnull().sum()
 The data are phrases in natural language.
 The goal is to assign a class label Y (binary classification with values "pos" or "neg") to input X.
 In this case we use BernoulliNB that use Naive Bayes algorithm and it works on Bernoulli distribution.
-It makes a binary classifier. 
+It makes a probabilistic binary classifier. 
 '''
 
 #Separates data in numpy.ndarray columns data/target 
@@ -59,7 +59,7 @@ print("\nModel evaluation")
 print("F1 SCORE: ", metrics.f1_score(Y_test, Y_test_predicted, average='macro')) #Best possible score is 1.0
 
 '''
-The metric makes me think that there is moderate overfitting.
+The model would appear moderately overfitted for this problem.
 '''
 
 #Try to predict a new case

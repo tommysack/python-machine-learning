@@ -135,5 +135,5 @@ print("R2 SCORE: ", r2_score(Y_test, Y_test_predicted)) #R2=ESS/TSS, best possib
 '''
 Also with k-fold the situation has not improved:
 R2 score in test is too bad, and in training is higher than test.
-Linear Regression isn't appropriate for this case. 
+The model would appear to be inappropriate for this problem.
 '''

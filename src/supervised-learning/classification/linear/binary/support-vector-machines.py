@@ -2,46 +2,45 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.svm import LinearSVC
+from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.svm import LinearSVC
-from sklearn.metrics import accuracy_score, log_loss
+from sklearn.metrics import accuracy_score
 
 #Load data
-breast_cancer_df = pd.read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data",
-  names=["id","diagnosis","radius_mean","texture_mean","perimeter_mean","area_mean","smoothness_mean","compactness_mean","concavity_mean","concave points_mean","symmetry_mean","fractal_dimension_mean","radius_se","texture_se","perimeter_se","area_se","smoothness_se","compactness_se","concavity_se","concave points_se","symmetry_se","fractal_dimension_se","radius_worst","texture_worst","perimeter_worst","area_worst","smoothness_worst","compactness_worst","concavity_worst","concave points_worst","symmetry_worst","fractal_dimension_worst"]
-)
+breast_cancer = load_breast_cancer()
 
 #General info
+print(breast_cancer.DESCR)
+breast_cancer_df = pd.DataFrame(breast_cancer.data, columns=breast_cancer.feature_names)
+breast_cancer_df['diagnosis'] = breast_cancer.target 
 breast_cancer_df.head()
 breast_cancer_df.describe() 
 breast_cancer_df.shape #32 columns, 569 rows
-breast_cancer_df['diagnosis'].unique() #array(['M', 'B'], dtype=object) => binary classification
+breast_cancer_df['diagnosis'].unique() #array([0, 1]) => binary classification
 sns.countplot(data=breast_cancer_df, x='diagnosis') #Ok, the classes are quite distributed
-breast_cancer_df.isnull().sum() #Check no null 
 breast_cancer_df.isnull().sum() 
 np.isnan(breast_cancer_df.drop('diagnosis',axis=1)).any() #Many algorithms do work only with numerical data
 
 #Correlation between data/target (corr function works only for numbers)
-diagnosis_mapping = {'B': 0, 'M': 1}
-breast_cancer_df['diagnosis_numbers'] = breast_cancer_df['diagnosis'].map(diagnosis_mapping)
-breast_cancer_df.drop('diagnosis', axis=1).corr()['diagnosis_numbers'].sort_values() #Only concave points_worst and perimeter_worst
+breast_cancer_df.corr()['diagnosis'].sort_values() #Only mean fractal dimension and smoothness error
 #Correlation between "concave points_worst" and "perimeter_worst" to exclude duplicate feature 
-breast_cancer_df.drop('diagnosis', axis=1).corr()['concave points_worst'].sort_values() 
-breast_cancer_df.drop('diagnosis', axis=1).corr()['perimeter_worst'].sort_values() 
+breast_cancer_df.corr()['mean fractal dimension'].sort_values() 
+breast_cancer_df.corr()['smoothness error'].sort_values() 
 
 plt.figure(figsize=(6, 6))
-sns.regplot(data=breast_cancer_df, x='concave points_worst', y='diagnosis_numbers', logistic=True)
-plt.title('Correlation between concave points_worst and diagnosis numbers')
-plt.xlabel('concave points_worst')
-plt.ylabel('diagnosis numbers')
+sns.regplot(data=breast_cancer_df, x='mean fractal dimension', y='diagnosis', logistic=True)
+plt.title('Correlation between mean fractal dimension and diagnosis')
+plt.xlabel('mean fractal dimension')
+plt.ylabel('diagnosis')
 plt.show()
 
 plt.figure(figsize=(6, 6))
-sns.regplot(data=breast_cancer_df, x='perimeter_worst', y='diagnosis_numbers', logistic=True)
-plt.title('Correlation between perimeter_worst and diagnosis numbers')
-plt.xlabel('perimeter_worst')
-plt.ylabel('diagnosis numbers')
+sns.regplot(data=breast_cancer_df, x='smoothness error', y='diagnosis', logistic=True)
+plt.title('Correlation between smoothness error and diagnosis')
+plt.xlabel('smoothness error')
+plt.ylabel('diagnosis')
 plt.show()
 
 '''
@@ -55,8 +54,8 @@ classifier.
 '''
 
 #Separates data in numpy.ndarray columns data/target 
-X = breast_cancer_df[["concave points_worst","perimeter_worst"]].values 
-Y = breast_cancer_df['diagnosis_numbers'].values 
+X = breast_cancer_df.drop("diagnosis", axis=1).values 
+Y = breast_cancer_df["diagnosis"].values 
 
 #Separates data in rows train/test
 X_train, X_test, Y_train, Y_test = train_test_split(X,Y, test_size=0.1, random_state=0)
@@ -80,7 +79,7 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-svc = LinearSVC(penalty='l2', C=0.0001)
+svc = LinearSVC(penalty='l2', C=0.01)
 svc.fit(X_train, Y_train) #Building the model
 
 Y_train_predicted = svc.predict(X_train) #To calculate model's overfitting
@@ -96,10 +95,7 @@ print("\nModel evaluation")
 print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
 
 '''
-Accuracy suggest that the Support Vector Machine model is appropriate.
+The model would appear to be appropriate for this problem.
 '''
 
-#Try to predict a new case
-x=[[-0.85095647, -0.48784158]]
-y_predicted = svc.predict(x)
-print("\nDiagnosis: ", y_predicted[0])
+

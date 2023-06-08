@@ -45,7 +45,7 @@ multinomial = MultinomialNB(alpha=1)
 #It rankes a word in a doc, based on the frequency that the word appears in all docs.
 #The words that appears once have higher score than those that appears most frequently.
 
-#I decide to use TfidfTransformer = CountVectorizer + TfidfTransformer
+#I decide to use TfidfVectorizer = CountVectorizer + TfidfTransformer
 
 #I also decided to process and tokenized the news with Stemmer and Lemmatizer
 
@@ -83,7 +83,7 @@ print("\nModel evaluation")
 print("F1 SCORE: ", metrics.f1_score(Y_test, Y_test_predicted, average='macro')) #Best possible score is 1.0
 
 '''
-The metric makes me think that there is moderate overfitting.
+The model would appear moderately overfitted for this problem.
 '''
 
 #Try to predict a new case
