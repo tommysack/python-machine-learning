@@ -58,8 +58,8 @@ print("X test max", np.amax(X_test))
 logistic_regression = LogisticRegression(penalty='l2', C=0.1, solver='lbfgs') #l2 regularisation to avoid overfitting, C inverse of regularization strength
 logistic_regression.fit(X_train, Y_train) #Building the model
 
-Y_train_predicted = logistic_regression.predict(X_train) #To calculate model's overfitting
-Y_train_predicted_proba = logistic_regression.predict_proba(X_train) #To calculate model's overfitting
+Y_train_predicted = logistic_regression.predict(X_train) 
+Y_train_predicted_proba = logistic_regression.predict_proba(X_train) 
 
 #Model overfitting evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
 print("\nModel overfitting evaluation")
@@ -67,7 +67,7 @@ print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best poss
 print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) #Best possible score is 0
 
 Y_test_predicted = logistic_regression.predict(X_test) 
-Y_test_predicted_proba = logistic_regression.predict_proba(X_test) #To calculate LOG LOSS
+Y_test_predicted_proba = logistic_regression.predict_proba(X_test) 
 
 #Model evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
 print("\nModel evaluation")

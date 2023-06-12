@@ -16,14 +16,14 @@ reviews_df['tag'].unique() #array(['pos', 'neg'], dtype=object) => binary classi
 sns.countplot(data=reviews_df, x='tag') #Ok, the classes are quite distributed
 reviews_df.isnull().sum() 
 
-#Correlation between data/target
+#Correlation between data/target (we assume moderate correlation from 0.5)
 #The column "text" contains phrases in natural language, it's not possible check correlation with corr() that  works only for numbers
 
 '''
 The data are phrases in natural language.
 The goal is to assign a class label Y (binary classification with values "pos" or "neg") to input X.
 In this case we use BernoulliNB that use Naive Bayes algorithm and it works on Bernoulli distribution.
-It makes a probabilistic binary classifier. 
+It makes a linear binary probabilistic classifier. 
 '''
 
 #Separates data in numpy.ndarray columns data/target 
@@ -47,20 +47,20 @@ bernoulli.fit(X_train_vector, Y_train) #Building model
 Y_train_predicted = bernoulli.predict(X_train_vector)
 Y_train_predicted_proba = bernoulli.predict_proba(X_train_vector)
 
-#Model overfitting evaluation (the Harmonic Precision-Recall Mean)
+#Model overfitting evaluation (the Harmonic Precision-Recall Mean, and the negative likelihood)
 print("\nModel overfitting evaluation")
 print("F1 SCORE: ", f1_score(Y_train, Y_train_predicted, average='macro')) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) #Best possible score is 1.0
+print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) #Best possible score is 0
 
 X_test_vector = count_vectorizer.transform(X_test)
 
 Y_test_predicted = bernoulli.predict(X_test_vector)
 Y_test_predicted_proba = bernoulli.predict_proba(X_test_vector)
 
-#Model evaluation (the Harmonic Precision-Recall Mean)
+#Model evaluation (the Harmonic Precision-Recall Mean, and the negative likelihood)
 print("\nModel evaluation")
 print("F1 SCORE: ", f1_score(Y_test, Y_test_predicted, average='macro')) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 1.0
+print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 0
 
 '''
 The model would appear moderately overfitted for this problem.

@@ -23,9 +23,10 @@ diabets_df.shape #11 columns, 442 rows
 diabets_df.isnull().sum() 
 np.isnan(diabets_df).any() #Many algorithms do work only with numerical data
 
-#Correlation between data/target (corr function works only for numbers)
-diabets_df.corr()['progression'].sort_values() #Moderate correlation with ltg and bmi, try to draw linear regression model fit
+#Correlation between features and target (we assume moderate correlation from 0.5)
+diabets_df.corr()['progression'].sort_values() #Moderate correlation with ltg and bmi 
 
+#Try to draw the correlation and the linear regression model fit
 plt.figure(figsize=(6, 6))
 sns.regplot(data=diabets_df, x='ltg', y='progression', color='yellow', line_kws={"color": "red"})
 plt.title('Correlation and Linear Regression between ltg and progression')
@@ -40,8 +41,10 @@ plt.ylabel('Progression')
 
 '''
 The data points are too far from regression lines. 
-Anyway I would try with Linear Regression model, since there is a weak correlation with progression.
+Anyway I would try with Linear Regression and all features.
+'''
 
+'''
 The data are points in an hyperspace H of 11 dimensions.
 The goal is to predict the value of the target column Y from the columns X as well as possible. 
 Technically you need to find the "best" hyperplane of 10 dimensions, then the linear function f (weights and biases), in H.
@@ -76,7 +79,7 @@ print("X test max", np.amax(X_test))
 linear_regression = LinearRegression() #LinearRegression uses Closed-Form/OLS
 linear_regression.fit(X_train, Y_train) #Building the model
 
-Y_train_predicted = linear_regression.predict(X_train) #To calculate model's overfitting
+Y_train_predicted = linear_regression.predict(X_train) 
 
 #Model overfitting evaluation
 print("\nModel overfitting evaluation")
@@ -94,46 +97,5 @@ print("R2 SCORE: ", r2_score(Y_test, Y_test_predicted)) #R2=ESS/TSS, best possib
 
 '''
 R2 score in training is higher than test, than it's probably a case of overfitting.
-Try to use k-fold cross validation.
 '''
 
-print("\nk-fold cross validation..")
-
-linear_regression_kfold = LinearRegression()
-
-kfold = KFold(n_splits=10) #Splits X_train in n_splits folders, and every of them is used to process training/test
-scores_kfold = []
-
-for fold_number, (train, test) in enumerate(kfold.split(X_train)):
-
-  linear_regression_kfold.fit(X_train[train], Y_train[train]) #Building the model
-  score_kfold = linear_regression_kfold.score(X_train[test], Y_train[test])
-  scores_kfold.append(score_kfold)
-
-  print("\nFOLD =", fold_number)
-  print("LINEAR REGRESSION SCORE: ", score_kfold)
-
-final_score = np.array(scores_kfold).mean()
-print("\nFINAL SCORE: ", final_score)
-
-Y_train_predicted = linear_regression_kfold.predict(X_train)
-
-#Model overfitting evaluation
-print("\nModel overfitting evaluation")
-print("MAE: ", mean_absolute_error(Y_train, Y_train_predicted))
-print("MSE: ", mean_squared_error(Y_train, Y_train_predicted))
-print("R2 SCORE: ", r2_score(Y_train, Y_train_predicted)) #R2=ESS/TSS, best possible score is 1.0
-
-Y_test_predicted = linear_regression_kfold.predict(X_test)
-
-#Model evaluation (distances from real data, and model performance)
-print("\nModel evaluation")
-print("MAE: ", mean_absolute_error(Y_test, Y_test_predicted))
-print("MSE: ", mean_squared_error(Y_test, Y_test_predicted))
-print("R2 SCORE: ", r2_score(Y_test, Y_test_predicted)) #R2=ESS/TSS, best possible score is 1.0
-
-'''
-Also with k-fold the situation has not improved:
-R2 score in test is too bad, and in training is higher than test.
-The model would appear to be inappropriate for this problem.
-'''

@@ -58,7 +58,7 @@ print("X test max", np.amax(X_test))
 svc = LinearSVC(penalty='l2', C=0.001)
 svc.fit(X_train, Y_train) #Building the model
 
-Y_train_predicted = svc.predict(X_train) #To calculate model's overfitting
+Y_train_predicted = svc.predict(X_train) 
 
 #Model overfitting evaluation (the percentage of samples that were correctly classified)
 print("\nModel overfitting evaluation")

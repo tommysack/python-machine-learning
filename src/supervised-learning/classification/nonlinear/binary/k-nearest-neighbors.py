@@ -23,25 +23,12 @@ sns.countplot(data=breast_cancer_df, x='diagnosis') #Ok, the classes are quite d
 breast_cancer_df.isnull().sum() 
 np.isnan(breast_cancer_df.drop('diagnosis',axis=1)).any() #Many algorithms do work only with numerical data
 
-#Correlation between data/target (corr function works only for numbers)
-breast_cancer_df.corr()['diagnosis'].sort_values() #Only mean fractal dimension and smoothness error
-#Correlation between "mean fractal dimension" and "smoothness error" to exclude duplicate feature 
-breast_cancer_df.corr()['mean fractal dimension'].sort_values() 
-breast_cancer_df.corr()['smoothness error'].sort_values() 
+#Correlation between data/target (we assume moderate correlation from 0.5)
+breast_cancer_df.corr()['diagnosis'].sort_values() #There are many features mildly correlated with target
 
-plt.figure(figsize=(6, 6))
-sns.regplot(data=breast_cancer_df, x='mean fractal dimension', y='diagnosis', logistic=True)
-plt.title('Correlation between mean fractal dimension and diagnosis')
-plt.xlabel('mean fractal dimension')
-plt.ylabel('diagnosis')
-plt.show()
-
-plt.figure(figsize=(6, 6))
-sns.regplot(data=breast_cancer_df, x='smoothness error', y='diagnosis', logistic=True)
-plt.title('Correlation between smoothness error and diagnosis')
-plt.xlabel('smoothness error')
-plt.ylabel('diagnosis')
-plt.show()
+'''
+I would try with K-NN and all features.
+'''
 
 '''
 The data are points in an hyperspace H of 32 dimensions.
@@ -50,7 +37,7 @@ Technically you need to find the "best" hypercurve of 31 dimensions which best s
 In this case we use K-NN classification that assign a class to a point based on the classes of k neighboring points
 (very low k => overfitting). In training phase K-NN does not learn any model ("lazy") but it only stores the points, 
 and the predictions are made just-in-time by calculating the similarity. 
-It make a non-probabilistic binary non-linear classifier. 
+It make a non-linear binary (but is possible multi-class) non-probabilistic classifier. 
 '''
 
 #Separates data in numpy.ndarray columns data/target 
@@ -90,13 +77,13 @@ for K in num_neighbors:
 
   Y_train_predicted = kn_classifier.predict(X_train)
 
-  #Model overfitting evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+  #Model overfitting evaluation (the percentage of samples that were correctly classified)
   print("\nModel overfitting evaluation")
   print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
   
   Y_test_predicted = kn_classifier.predict(X_test)
   
-  #Model evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+  #Model evaluation (the percentage of samples that were correctly classified)
   print("\nModel evaluation")
   print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
 

@@ -23,25 +23,24 @@ sns.countplot(data=breast_cancer_df, x='diagnosis') #Ok, the classes are quite d
 breast_cancer_df.isnull().sum() 
 np.isnan(breast_cancer_df.drop('diagnosis',axis=1)).any() #Many algorithms do work only with numerical data
 
-#Correlation between data/target (corr function works only for numbers)
-breast_cancer_df.corr()['diagnosis'].sort_values() #Only mean fractal dimension and smoothness error
-#Correlation between "mean fractal dimension" and "smoothness error" to exclude duplicate feature 
-breast_cancer_df.corr()['mean fractal dimension'].sort_values() 
-breast_cancer_df.corr()['smoothness error'].sort_values() 
+#General info
+print(breast_cancer.DESCR)
+breast_cancer_df = pd.DataFrame(breast_cancer.data, columns=breast_cancer.feature_names)
+breast_cancer_df['diagnosis'] = breast_cancer.target 
+breast_cancer_df.head()
+breast_cancer_df.describe() 
+breast_cancer_df.shape #32 columns, 569 rows
+breast_cancer_df['diagnosis'].unique() #array([0, 1]) => binary classification
+sns.countplot(data=breast_cancer_df, x='diagnosis') #Ok, the classes are quite distributed
+breast_cancer_df.isnull().sum() 
+np.isnan(breast_cancer_df.drop('diagnosis',axis=1)).any() #Many algorithms do work only with numerical data
 
-plt.figure(figsize=(6, 6))
-sns.regplot(data=breast_cancer_df, x='mean fractal dimension', y='diagnosis', logistic=True)
-plt.title('Correlation between mean fractal dimension and diagnosis')
-plt.xlabel('mean fractal dimension')
-plt.ylabel('diagnosis')
-plt.show()
+#Correlation between data/target (we assume moderate correlation from 0.5)
+breast_cancer_df.corr()['diagnosis'].sort_values() #There are many features mildly correlated with target
 
-plt.figure(figsize=(6, 6))
-sns.regplot(data=breast_cancer_df, x='smoothness error', y='diagnosis', logistic=True)
-plt.title('Correlation between smoothness error and diagnosis')
-plt.xlabel('smoothness error')
-plt.ylabel('diagnosis')
-plt.show()
+'''
+I would try with Linear SVC and all features.
+'''
 
 '''
 The data are points in an hyperspace H of 32 dimensions.
@@ -49,7 +48,7 @@ The goal is to assign a class label Y (binary classification with values "M" or 
 Technically you need to find the "best" hyperplane of 31 dimensions which best separates the points classified in H.
 The "best": in this case we use LinearSVC (support vector machines) that use Gradient Descent to minimize loss function.
 Behind the scenes it working finds hyperplane that maximise the width between the two categories. 
-It make a non-probabilistic binary (but is possible multi-class one vs all) linear (but can perform non-linear using kernel) 
+It make a linear (but can perform non-linear using kernel) binary (but is possible multi-class one vs all) non-probabilistic 
 classifier. 
 '''
 
@@ -82,7 +81,7 @@ print("X test max", np.amax(X_test))
 svc = LinearSVC(penalty='l2', C=0.01)
 svc.fit(X_train, Y_train) #Building the model
 
-Y_train_predicted = svc.predict(X_train) #To calculate model's overfitting
+Y_train_predicted = svc.predict(X_train) 
 
 #Model overfitting evaluation (the percentage of samples that were correctly classified)
 print("\nModel overfitting evaluation")
