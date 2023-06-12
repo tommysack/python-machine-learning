@@ -17,41 +17,41 @@ docker start ml-py
 docker exec -w /home/ML-py -it ml-py bash 
 ```
 
-## The contained use cases
+## The source folder
 
 **Supervised Learning**
 
 1. Regression
 
   - Linear
-    - linear-regression.py
+    - Linear regression
   - Non linear
-    - polynomial-regression.py 
+    - Polynomial regression
 
 2. Classification
 
   - Linear
 
     - Binary      
-      - logistic-regression.py
-      - support-vector-machines.py
-      - bernoulli-nb.py
+      - Logistic regression
+      - Support Vector Machines
+      - Bernoulli Naive Bayes
 
     - Multiclass
       - One vs all
-        - logistic-regression.py
-        - support-vector-machines.py
-      - multinomial-nb.py
+        - Logistic regression 
+        - Support Vector Machines
+      - Multinomial Naive Bayes
 
   - Non linear
 
     - Binary
-      - k-nearest-neighbors.py
-      - decision-tree.py
-      - random-decision-forest.py
-      
+      - K Nearest Neighbors
+      - Decision Tree
+      - Random Decision Forest
+
     - Multiclass
-      - k-nearest-neighbors.py
+      - K Nearest Neighbors
 
 
 
