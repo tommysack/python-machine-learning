@@ -53,5 +53,12 @@ docker exec -w /home/ML-py -it ml-py bash
     - Multiclass
       - K Nearest Neighbors
 
+3. Techniques
+
+  - Dimensionality Reduction
+
+  - Optimization
+
+
 
 

@@ -2,10 +2,14 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 from sklearn.datasets import load_digits
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, train_test_split
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, log_loss
+from sklearn.svm import SVC, LinearSVC
+from sklearn.metrics import accuracy_score
+
+'''
+PROS: it performes hyperparameter tuning to determine the optimal values, it use cross validation method.
+'''
 
 #Load data
 digits = load_digits()
@@ -17,8 +21,8 @@ digits_df['target'] = digits.target
 digits_df.head()
 digits_df.describe() 
 digits_df.shape #65 columns, 1797 rows
-sns.countplot(data=digits_df, x='target') #Ok, the classes are quite distributed
 digits_df.isnull().sum() 
+sns.countplot(data=digits_df, x='target') #Ok, the classes are quite distributed
 np.isnan(digits_df).any() #Many algorithms do work only with numerical data
 
 '''
@@ -26,7 +30,7 @@ The data are points in an hyperspace H of 65 dimensions.
 The goal is to assign a class label Y (classification with values 0..9) to input X.
 The one vs all approach consists in to split a multi-classification problem into multiple binary classifier method (building one model for every single class, 
 predicting a new case over every model and taking the model with higher probability).
-In this case we use LogisticRegression that use LBFGS method (Gradient Ascent to maximize Likelihood).
+In this case we use SVC.
 '''
 
 #Separates data in Dataframe/Series columns data/target 
@@ -55,26 +59,26 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-logistic_regression = LogisticRegression(penalty='l2', C=0.1, solver='lbfgs') #l2 regularisation to avoid overfitting, C inverse of regularization strength
-logistic_regression.fit(X_train, Y_train) #Building the model
+svc = SVC() #Support Vector Machine (search estimator: must implement the scikit estimator interface)
+param_grid = { #Hyperparameter to tuning
+  "C": [1, 10, 100, 1000],
+  "kernel": ["linear", "rbf", "sigmoid", "poly"],  
+  "gamma": [0.1, 1, "auto"],
+  "decision_function_shape": ["ovo", "ovr"]
+}
+search = RandomizedSearchCV(svc, param_grid, cv=10)
+search.fit(X_train, Y_train)
 
-Y_train_predicted = logistic_regression.predict(X_train) 
-Y_train_predicted_proba = logistic_regression.predict_proba(X_train) 
+svc = search.best_estimator_
 
-#Model overfitting evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+#Model evaluation (the percentage of samples that were correctly classified)
 print("\nModel overfitting evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) #Best possible score is 0
+print("ACCURACY SCORE: ", svc.score(X_train, Y_train)) #Best possible score is 1.0
 
-Y_test_predicted = logistic_regression.predict(X_test) 
-Y_test_predicted_proba = logistic_regression.predict_proba(X_test) 
-
-#Model evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+#Model evaluation (the percentage of samples that were correctly classified)
 print("\nModel evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 0
+print("ACCURACY SCORE: ", svc.score(X_test, Y_test)) #Best possible score is 1.0
 
 '''
 The model would appear to be appropriate for this problem.
 '''
-

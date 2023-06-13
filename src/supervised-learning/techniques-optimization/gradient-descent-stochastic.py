@@ -2,10 +2,15 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 from sklearn.datasets import load_digits
+from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, log_loss
+from sklearn.metrics import accuracy_score
+
+'''
+PROS: it's faster and appropriate to big dataset.
+CONS: it could be noisier than that of original gradient descent, in every step it's not calculating the actual gradient but an approximation.
+'''
 
 #Load data
 digits = load_digits()
@@ -17,16 +22,14 @@ digits_df['target'] = digits.target
 digits_df.head()
 digits_df.describe() 
 digits_df.shape #65 columns, 1797 rows
-sns.countplot(data=digits_df, x='target') #Ok, the classes are quite distributed
 digits_df.isnull().sum() 
+sns.countplot(data=digits_df, x='target') #Ok, the classes are quite distributed
 np.isnan(digits_df).any() #Many algorithms do work only with numerical data
 
 '''
 The data are points in an hyperspace H of 65 dimensions.
 The goal is to assign a class label Y (classification with values 0..9) to input X.
-The one vs all approach consists in to split a multi-classification problem into multiple binary classifier method (building one model for every single class, 
-predicting a new case over every model and taking the model with higher probability).
-In this case we use LogisticRegression that use LBFGS method (Gradient Ascent to maximize Likelihood).
+In this case we use SVM.
 '''
 
 #Separates data in Dataframe/Series columns data/target 
@@ -55,26 +58,25 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-logistic_regression = LogisticRegression(penalty='l2', C=0.1, solver='lbfgs') #l2 regularisation to avoid overfitting, C inverse of regularization strength
-logistic_regression.fit(X_train, Y_train) #Building the model
+sgd_classifier = SGDClassifier(loss="hinge") #hinge  gives a linear SVM
+sgd_classifier.fit(X_train, Y_train)
 
-Y_train_predicted = logistic_regression.predict(X_train) 
-Y_train_predicted_proba = logistic_regression.predict_proba(X_train) 
+Y_train_predicted = sgd_classifier.predict(X_train) 
 
-#Model overfitting evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+#Model overfit evaluation (the percentage of samples that were correctly classified)
 print("\nModel overfitting evaluation")
 print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) #Best possible score is 0
 
-Y_test_predicted = logistic_regression.predict(X_test) 
-Y_test_predicted_proba = logistic_regression.predict_proba(X_test) 
+Y_test_predicted = sgd_classifier.predict(X_test) 
 
-#Model evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+#Model evaluation (the percentage of samples that were correctly classified)
 print("\nModel evaluation")
 print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 0
 
 '''
 The model would appear to be appropriate for this problem.
 '''
+
+
+
 
