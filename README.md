@@ -37,26 +37,27 @@ docker exec -w /home/ML-py -it ml-py bash
       - Support Vector Machines
       - Bernoulli Naive Bayes
 
-    - Multiclass
-      - One vs all
-        - Logistic regression 
-        - Support Vector Machines
+    - Multiclass      
+      - Logistic regression (one vs all)
+      - Support Vector Machines (one vs all)
       - Linear Discriminant Analysis
       - Multinomial Naive Bayes      
 
   - Non linear
 
     - Binary
-      - K Nearest Neighbors
+      - K-nearest Neighbors
       - Decision Tree
       - Random Decision Forest
 
     - Multiclass
-      - K Nearest Neighbors
+      - K-nearest Neighbors
+      - Decision Tree
+      - Random Decision Forest
 
-3. Techniques
+3. Optimization techniques
 
-  - k-fold Cross-Validation
+  - K-fold Cross-Validation
   - Gradient Descent Stochastic
   - Randomize Search
   - Principal Component Analysis
