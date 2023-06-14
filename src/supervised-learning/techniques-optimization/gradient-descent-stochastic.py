@@ -16,9 +16,10 @@ CONS: it could be noisier than that of original gradient descent, in every step 
 digits = load_digits()
 
 #General info
-print(digits.DESCR) #Images 8x8 64 columns of pixels (every pixel has a value 0..16), and 1 value integer rapresented
+print(digits.DESCR) #Images 8x8 64 columns of pixels (every pixel has a value 0..16), and 1 column with the value integer rapresented
 digits_df = pd.DataFrame(digits.data)
 digits_df['target'] = digits.target
+digits_df['target'].unique() #array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) => multi-class classification
 digits_df.head()
 digits_df.describe() 
 digits_df.shape #65 columns, 1797 rows

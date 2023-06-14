@@ -4,7 +4,7 @@ import seaborn as sns
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 from sklearn.metrics import accuracy_score
 
 #Load data
@@ -25,10 +25,7 @@ np.isnan(digits_df).any() #Many algorithms do work only with numerical data
 '''
 The data are points in an hyperspace H of 65 dimensions.
 The goal is to assign a class label Y (classification with values 0..9) to input X.
-In this case we use K-NN classification that assign a class to a point based on the classes of k neighboring points
-(very low k => overfitting). In training phase K-NN does not learn any model ("lazy"), 
-and the predictions are made just-in-time by calculating the similarity. 
-It make a non-linear multiclass non-probabilistic classifier. 
+In this case we use LDA.
 '''
 
 #Separates data in Dataframe/Series columns data/target 
@@ -57,28 +54,21 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-num_neighbors = [4,5,7,10,12,15,18,20,25] 
+lda = LDA(solver='svd')
+lda.fit(X_train, Y_train) 
 
-for K in num_neighbors:
+Y_train_predicted = lda.predict(X_train) 
 
-  print("\nK=", str(K))
+#Model overfitting evaluation (the percentage of samples that were correctly classified)
+print("\nModel overfitting evaluation")
+print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
 
-  kn_classifier = KNeighborsClassifier(n_neighbors=K, algorithm='auto', metric='minkowski')  
-  kn_classifier.fit(X_train,Y_train)
+Y_test_predicted = lda.predict(X_test) 
 
-  Y_train_predicted = kn_classifier.predict(X_train)
-
-  #Model overfitting evaluation (the percentage of samples that were correctly classified)
-  print("\nModel overfitting evaluation")
-  print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
-  
-  Y_test_predicted = kn_classifier.predict(X_test)
-  
-  #Model evaluation (the percentage of samples that were correctly classified)
-  print("\nModel evaluation")
-  print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
+#Model evaluation (the percentage of samples that were correctly classified)
+print("\nModel evaluation")
+print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
 
 '''
 The model would appear to be appropriate for this problem.
 '''
-

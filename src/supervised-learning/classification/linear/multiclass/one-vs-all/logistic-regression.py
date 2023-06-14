@@ -11,9 +11,10 @@ from sklearn.metrics import accuracy_score, log_loss
 digits = load_digits()
 
 #General info
-print(digits.DESCR) #Images 8x8 64 columns of pixels (every pixel has a value 0..16), and 1 value integer rapresented
+print(digits.DESCR) #Images 8x8 64 columns of pixels (every pixel has a value 0..16), and 1 column with the value integer rapresented
 digits_df = pd.DataFrame(digits.data)
 digits_df['target'] = digits.target
+digits_df['target'].unique() #array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) => multi-class classification
 digits_df.head()
 digits_df.describe() 
 digits_df.shape #65 columns, 1797 rows
@@ -56,7 +57,7 @@ print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
 logistic_regression = LogisticRegression(penalty='l2', C=0.1, solver='lbfgs') #l2 regularisation to avoid overfitting, C inverse of regularization strength
-logistic_regression.fit(X_train, Y_train) #Building the model
+logistic_regression.fit(X_train, Y_train) 
 
 Y_train_predicted = logistic_regression.predict(X_train) 
 Y_train_predicted_proba = logistic_regression.predict_proba(X_train) 

@@ -12,13 +12,13 @@ from sklearn.metrics import accuracy_score, log_loss
 breast_cancer = load_breast_cancer()
 
 #General info
-print(breast_cancer.DESCR)
+print(breast_cancer.DESCR) #Cancers 31 columns of informations, e 1 column with the diagnosis
 breast_cancer_df = pd.DataFrame(breast_cancer.data, columns=breast_cancer.feature_names)
 breast_cancer_df['diagnosis'] = breast_cancer.target 
+breast_cancer_df['diagnosis'].unique() #array([0, 1]) => binary classification
 breast_cancer_df.head()
 breast_cancer_df.describe() 
-breast_cancer_df.shape #32 columns, 569 rows
-breast_cancer_df['diagnosis'].unique() #array([0, 1]) => binary classification
+breast_cancer_df.shape #31 columns, 569 rows
 sns.countplot(data=breast_cancer_df, x='diagnosis') #Ok, the classes are quite distributed
 breast_cancer_df.isnull().sum() 
 np.isnan(breast_cancer_df.drop('diagnosis',axis=1)).any() #Many algorithms do work only with numerical data
@@ -40,8 +40,8 @@ classifier.
 '''
 
 #Separates data in numpy.ndarray columns data/target 
-X = breast_cancer_df.drop("diagnosis", axis=1).values  
-Y = breast_cancer_df["diagnosis"].values 
+X = breast_cancer.data
+Y = breast_cancer.target
 
 #Separates data in rows train/test
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.1, random_state=0)
@@ -66,7 +66,7 @@ print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
 logistic_regression = LogisticRegression(penalty='l2', C=10.0, solver='lbfgs') #l2 regularisation to avoid overfitting, C inverse of regularization strength
-logistic_regression.fit(X_train, Y_train) #Building the model
+logistic_regression.fit(X_train, Y_train) 
 
 Y_train_predicted = logistic_regression.predict(X_train) 
 Y_train_predicted_proba = logistic_regression.predict_proba(X_train) 

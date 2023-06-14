@@ -11,10 +11,10 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.datasets import load_diabetes
 
 #Load data
-diabetes = load_diabetes() #10 patients variables X and 1 quantitative Y measure of disease progression one year after
+diabetes = load_diabetes() 
 
 #General info
-print(diabetes.DESCR) #10 patients variables X and 1 quantitative Y measure of disease progression one year after
+print(diabetes.DESCR) #Patients 10 columns of information and 1 column quantitative measure of disease progression one year after
 diabetes_df = pd.DataFrame(diabetes.data, columns=["age","sex","bmi","bp","tc","ldl","hdl","tch","ltg","glu"])
 diabetes_df['progression'] = diabetes.target
 diabetes_df.head()
@@ -85,7 +85,7 @@ for degree_current in range (2, 6): #Starts from 2, since 1 is Linear Regression
   pf = PolynomialFeatures(degree=degree_current)
 
   X_train_poly = pf.fit_transform(X_train)
-  linear_regression.fit(X_train_poly, Y_train) #Building the model
+  linear_regression.fit(X_train_poly, Y_train) 
 
   Y_train_predicted = linear_regression.predict(X_train_poly) 
 

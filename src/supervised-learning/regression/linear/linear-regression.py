@@ -14,7 +14,7 @@ from sklearn.datasets import load_diabetes
 diabetes = load_diabetes()
 
 #General info
-print(diabetes.DESCR) #10 patients variables X and 1 quantitative Y measure of disease progression one year after
+print(diabetes.DESCR) #Patients 10 columns of information and 1 column quantitative measure of disease progression one year after
 diabetes_df = pd.DataFrame(diabetes.data, columns=["age","sex","bmi","bp","tc","ldl","hdl","tch","ltg","glu"])
 diabetes_df['progression'] = diabetes.target
 diabetes_df.head()
@@ -77,7 +77,7 @@ print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
 linear_regression = LinearRegression() #LinearRegression uses Closed-Form/OLS
-linear_regression.fit(X_train, Y_train) #Building the model
+linear_regression.fit(X_train, Y_train) 
 
 Y_train_predicted = linear_regression.predict(X_train) 
 

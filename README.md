@@ -41,7 +41,8 @@ docker exec -w /home/ML-py -it ml-py bash
       - One vs all
         - Logistic regression 
         - Support Vector Machines
-      - Multinomial Naive Bayes
+      - Linear Discriminant Analysis
+      - Multinomial Naive Bayes      
 
   - Non linear
 
@@ -55,9 +56,12 @@ docker exec -w /home/ML-py -it ml-py bash
 
 3. Techniques
 
-  - Dimensionality Reduction
-
-  - Optimization
+  - k-fold Cross-Validation
+  - Gradient Descent Stochastic
+  - Randomize Search
+  - Principal Component Analysis
+  - Kernel Principal Component Analysis
+  - Linear Discriminant Analysis
 
 
 

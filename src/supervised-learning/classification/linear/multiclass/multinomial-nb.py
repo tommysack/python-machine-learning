@@ -12,12 +12,13 @@ from sklearn.naive_bayes import MultinomialNB
 news = fetch_20newsgroups(random_state=42)
 
 #General info
-print(news.DESCR) #20 newsgroups dataset (18000 newsgroups)
-news.target_names #All categories labels
-news.data[10] #Content of article with index 10
-news.target[10] #Category of article with index 10
+print(news.DESCR) #News in 2 columns: 1 with text, and 1 with category
 news_df = pd.DataFrame(news.data)
 news_df['category'] = news.target
+news_df['category'].unique() #array([ 7,  4,  1, 14, 16, 13,  3,  2,  8, 19,  6,  0, 12,  5, 10,  9, 15, 17, 18, 11]) => multi-class classification
+news_df.head()
+news_df.describe() 
+news_df.shape #2 columns, 11314 rows
 sns.countplot(data=news_df, x='category') #Ok, the classes are quite distributed
 news_df.isnull().sum()
 

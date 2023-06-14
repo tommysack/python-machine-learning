@@ -18,9 +18,10 @@ Try to use it with a model previously overfitted.
 diabetes = load_diabetes()
 
 #General info
-print(diabetes.DESCR) #10 patients variables X and 1 quantitative Y measure of disease progression one year after
+print(diabetes.DESCR) #Patients 10 columns of information and 1 column quantitative measure of disease progression one year after
 diabetes_df = pd.DataFrame(diabetes.data, columns=["age","sex","bmi","bp","tc","ldl","hdl","tch","ltg","glu"])
 diabetes_df['progression'] = diabetes.target
+diabetes_df['progression'].unique()
 diabetes_df.head()
 diabetes_df.describe() 
 diabetes_df.shape #11 columns, 442 rows
@@ -89,7 +90,7 @@ scores_kfold = []
 
 for (train_indexes, test_indexes) in kfold.split(X_train):
 
-  linear_regression.fit(X_train[train_indexes], Y_train[train_indexes]) #Building the model
+  linear_regression.fit(X_train[train_indexes], Y_train[train_indexes])
 
   score_kfold = linear_regression.score(X_train[test_indexes], Y_train[test_indexes])
   scores_kfold.append(score_kfold)
