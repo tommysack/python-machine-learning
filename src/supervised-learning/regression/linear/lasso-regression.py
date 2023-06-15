@@ -75,7 +75,7 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-lasso = Lasso() #Lasso uses solver/RSS
+lasso = Lasso() 
 lasso.fit(X_train, Y_train) 
 
 Y_train_predicted = lasso.predict(X_train) 

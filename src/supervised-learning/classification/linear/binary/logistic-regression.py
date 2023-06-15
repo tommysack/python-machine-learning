@@ -34,7 +34,7 @@ I would try with Logistic Regression and all features.
 The data are points in an hyperspace H of 32 dimensions.
 The goal is to assign a class label Y (binary classification with values "M" or "B") to input X.
 Technically you need to find the "best" hyperplane of 31 dimensions which best separates the points classified in H.
-The "best": in this case we use LogisticRegression that use LBFGS method (Gradient Ascent to maximize Likelihood).
+The "best": in this case we use LogisticRegression that use "solver" to maximize Likelihood.
 It make a linear binary (but is possible multi-class one vs all) probabilistic (returns the probability between 0 and 1 that a point belongs to a class using sigmoid function) 
 classifier. 
 '''

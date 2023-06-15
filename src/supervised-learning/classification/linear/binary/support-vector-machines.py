@@ -47,7 +47,7 @@ I would try with Linear SVC and all features.
 The data are points in an hyperspace H of 32 dimensions.
 The goal is to assign a class label Y (binary classification with values "M" or "B") to input X.
 Technically you need to find the "best" hyperplane of 31 dimensions which best separates the points classified in H.
-The "best": in this case we use LinearSVC (support vector machines) that use Gradient Descent to minimize loss function.
+The "best": in this case we use LinearSVC (linear support vector classification) to minimize loss function.
 Behind the scenes it working finds hyperplane that maximise the width between the two categories. 
 It make a linear (but can perform non-linear using kernel) binary (but is possible multi-class one vs all) non-probabilistic 
 classifier. 

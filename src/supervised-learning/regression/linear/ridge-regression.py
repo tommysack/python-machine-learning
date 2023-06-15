@@ -75,7 +75,7 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-ridge = Ridge(alpha=1, solver='svd') #Ridge uses solver/RSS
+ridge = Ridge(alpha=1, solver='svd')
 ridge.fit(X_train, Y_train) 
 
 Y_train_predicted = ridge.predict(X_train) 

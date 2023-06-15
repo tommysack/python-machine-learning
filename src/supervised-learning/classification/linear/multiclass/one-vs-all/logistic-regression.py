@@ -27,7 +27,7 @@ The data are points in an hyperspace H of 65 dimensions.
 The goal is to assign a class label Y (classification with values 0..9) to input X.
 The one vs all approach consists in to split a multi-classification problem into multiple binary classifier method (building one model for every single class, 
 predicting a new case over every model and taking the model with higher probability).
-In this case we use LogisticRegression that use LBFGS method (Gradient Ascent to maximize Likelihood).
+In this case we use LogisticRegression that use "solver" to maximize Likelihood.
 '''
 
 #Separates data in Dataframe/Series columns data/target 

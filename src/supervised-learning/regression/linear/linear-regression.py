@@ -76,7 +76,7 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-linear_regression = LinearRegression() #LinearRegression uses SVD/RSS
+linear_regression = LinearRegression() 
 linear_regression.fit(X_train, Y_train) 
 
 Y_train_predicted = linear_regression.predict(X_train) 
