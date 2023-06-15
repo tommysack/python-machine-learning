@@ -48,7 +48,7 @@ Anyway I would try with Linear Regression and all features.
 The data are points in an hyperspace H of 11 dimensions.
 The goal is to predict the value of the target column Y from the columns X as well as possible. 
 Technically you need to find the "best" curved surface  of 10 dimensions, then the best polynomial function f (weights and biases), in the H.
-The "best": in this case we use LinearRegression that use a Closed-Form solution (for SVD) trying to minimize the RSS cost function.
+The "best": in this case we use LinearRegression that uses a Closed-Form solution (for SVD) trying to minimize the RSS cost function.
 '''
 
 #Separates data in Dataframe/Series columns data/target 
@@ -93,7 +93,7 @@ for degree_current in range (2, 6): #Starts from 2, since 1 is Linear Regression
   print("\nModel overfitting evaluation")
   print("MAE: ", mean_absolute_error(Y_train, Y_train_predicted))
   print("MSE: ", mean_squared_error(Y_train, Y_train_predicted))
-  print("R2 SCORE: ", r2_score(Y_train, Y_train_predicted)) #R2=ESS/TSS, best possible score is 1.0
+  print("R2 SCORE: ", r2_score(Y_train, Y_train_predicted)) 
 
   X_test_poly = pf.transform(X_test)
   Y_test_predicted = linear_regression.predict(X_test_poly) #Predict usign X_test_poly
@@ -102,7 +102,7 @@ for degree_current in range (2, 6): #Starts from 2, since 1 is Linear Regression
   print("\nModel evaluation")
   print("MAE: ", mean_absolute_error(Y_test, Y_test_predicted))
   print("MSE: ", mean_squared_error(Y_test, Y_test_predicted))
-  print("R2 SCORE: ", r2_score(Y_test, Y_test_predicted) ) #R2=ESS/TSS, best possible score is 1.0
+  print("R2 SCORE: ", r2_score(Y_test, Y_test_predicted) )
     
 '''
 R2 score in training is much higher than test.

@@ -2,14 +2,11 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 from sklearn.datasets import load_digits
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, train_test_split
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, log_loss
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.svm import SVC, LinearSVC
-from sklearn.metrics import accuracy_score
-
-'''
-Randomize Search performes hyperparameter tuning to determine the optimal values, and use cross validation method.
-'''
 
 #Load data
 digits = load_digits()
@@ -29,9 +26,8 @@ np.isnan(digits_df).any() #Many algorithms do work only with numerical data
 '''
 The data are points in an hyperspace H of 65 dimensions.
 The goal is to assign a class label Y (classification with values 0..9) to input X.
-The one vs all approach consists in to split a multi-classification problem into multiple binary classifier method (building one model for every single class, 
-predicting a new case over every model and taking the model with higher probability).
-In this case we use SVC.
+In this case we use MLPClassifier that uses "solver" to to minimize Log Loss.
+It make a non-linear multiclass probabilistic classifier. 
 '''
 
 #Separates data in Dataframe/Series columns data/target 
@@ -60,26 +56,37 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-svc = SVC() #Support Vector Machine (search estimator: must implement the scikit estimator interface)
-param_grid = { #Hyperparameter to tuning
-  "C": [1, 10, 100, 1000],
-  "kernel": ["linear", "rbf", "sigmoid", "poly"],  
-  "gamma": [0.1, 1, "auto"],
-  "decision_function_shape": ["ovo", "ovr"]
-}
-search = RandomizedSearchCV(svc, param_grid, cv=10)
-search.fit(X_train, Y_train)
+mlp_classifier = MLPClassifier(
+  hidden_layer_sizes=(10), #Each tupla's element represents the numbers of neurons in its specific layer
+  activation='relu', #Activation function 
+  solver='adam', #The algorithm to use for weight optimization
+  alpha=0.001, #Constant that multiplies the L2 regularization
+  batch_size='auto', #Size of minibatches 
+  learning_rate='constant', #The rate to update the weights
+  #max_iter=200, #Max number of iterations 
+  early_stopping=True, #To stop training iterations when the score is not improving
+  verbose=True
+)
+mlp_classifier.fit(X_train, Y_train)
 
-svc = search.best_estimator_
+Y_train_predicted = mlp_classifier.predict(X_train) 
+Y_train_predicted_proba = mlp_classifier.predict_proba(X_train) 
+
+#Model overfitting evaluation 
+print("\nModel overfitting evaluation")
+print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) 
+print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) 
+
+Y_test_predicted = mlp_classifier.predict(X_test) 
+Y_test_predicted_proba = mlp_classifier.predict_proba(X_test)
 
 #Model evaluation 
-print("\nModel overfitting evaluation")
-print("ACCURACY SCORE: ", svc.score(X_train, Y_train)) 
-
-#Model evaluation
 print("\nModel evaluation")
-print("ACCURACY SCORE: ", svc.score(X_test, Y_test)) 
+print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) 
+print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) 
 
 '''
 The model would appear to be appropriate for this problem.
 '''
+
+

@@ -84,7 +84,7 @@ Y_train_predicted = lasso.predict(X_train)
 print("\nModel overfitting evaluation")
 print("MAE: ", mean_absolute_error(Y_train, Y_train_predicted))
 print("MSE: ", mean_squared_error(Y_train, Y_train_predicted))
-print("R2 SCORE: ", r2_score(Y_train, Y_train_predicted)) #R2=ESS/TSS, best possible score is 1.0
+print("R2 SCORE: ", r2_score(Y_train, Y_train_predicted)) 
 
 Y_test_predicted = lasso.predict(X_test) 
 
@@ -92,7 +92,7 @@ Y_test_predicted = lasso.predict(X_test)
 print("\nModel evaluation")
 print("MAE: ", mean_absolute_error(Y_test, Y_test_predicted))
 print("MSE: ", mean_squared_error(Y_test, Y_test_predicted))
-print("R2 SCORE: ", r2_score(Y_test, Y_test_predicted)) #R2=ESS/TSS, best possible score is 1.0
+print("R2 SCORE: ", r2_score(Y_test, Y_test_predicted)) 
 
 '''
 R2 score in training is much higher than test.

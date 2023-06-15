@@ -27,7 +27,7 @@ The data are points in an hyperspace H of 65 dimensions.
 The goal is to assign a class label Y (classification with values 0..9) to input X.
 The one vs all approach consists in to split a multi-classification problem into multiple binary classifier method (building one model for every single class, 
 predicting a new case over every model and taking the model with higher probability).
-In this case we use LogisticRegression that use "solver" to maximize Likelihood.
+In this case we use LogisticRegression that uses "solver" to maximize Likelihood.
 '''
 
 #Separates data in Dataframe/Series columns data/target 
@@ -62,18 +62,18 @@ logistic_regression.fit(X_train, Y_train)
 Y_train_predicted = logistic_regression.predict(X_train) 
 Y_train_predicted_proba = logistic_regression.predict_proba(X_train) 
 
-#Model overfitting evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+#Model overfitting evaluation 
 print("\nModel overfitting evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) #Best possible score is 0
+print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) 
+print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) 
 
 Y_test_predicted = logistic_regression.predict(X_test) 
 Y_test_predicted_proba = logistic_regression.predict_proba(X_test) 
 
-#Model evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+#Model evaluation 
 print("\nModel evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 0
+print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) 
+print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) 
 
 '''
 The model would appear to be appropriate for this problem.

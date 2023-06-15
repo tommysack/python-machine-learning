@@ -17,6 +17,28 @@ docker start ml-py
 docker exec -w /home/ML-py -it ml-py bash 
 ```
 
+## Performance metrics used
+
+**Regression**
+
+- MAE (Mean Absolute Error)
+
+- MSE (Mean Squared Error)
+
+- R2 score (Coefficient of determination)
+R2 = ESS / TSS (best score is 1.0)
+
+**Classification**
+
+- Accuracy score (the percentage of samples that were correctly classified)
+Num of correct predictions / Total num of predictions (best score is 1.0)
+
+- F1 score (Harmonic Precision-Recall Mean)
+Best score is 1.0
+
+- Log loss (Negative Likelihood)
+-1 * log-likelihood (best score is 0)
+
 ## The source folder
 
 **Supervised Learning**
@@ -54,6 +76,7 @@ docker exec -w /home/ML-py -it ml-py bash
       - K-nearest Neighbors
       - Decision Tree
       - Random Decision Forest
+      - Multi-layer Perceptron 
 
 3. Optimization techniques
 

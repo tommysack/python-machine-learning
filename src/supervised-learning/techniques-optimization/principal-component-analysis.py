@@ -66,19 +66,19 @@ logistic_regression.fit(X_train, Y_train)
 Y_train_predicted = logistic_regression.predict(X_train) 
 Y_train_predicted_proba = logistic_regression.predict_proba(X_train) 
 
-#Model overfitting evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+#Model overfitting evaluation 
 print("\n----------------WITH PCA----------------")
 print("\nModel overfitting evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) #Best possible score is 0
+print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) 
+print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) 
 
 Y_test_predicted = logistic_regression.predict(X_test) 
 Y_test_predicted_proba = logistic_regression.predict_proba(X_test) 
 
-#Model evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+#Model evaluation
 print("\nModel evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 0
+print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) 
+print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) 
 print("\n----------------------------------------")
 
 #Let's build the model WITHOUT PCA
@@ -92,19 +92,19 @@ logistic_regression.fit(X_train, Y_train)
 Y_train_predicted = logistic_regression.predict(X_train) 
 Y_train_predicted_proba = logistic_regression.predict_proba(X_train) 
 
-#Model overfitting evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+#Model overfitting evaluation
 print("\n----------------WITHOUT PCA----------------")
 print("\nModel overfitting evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) #Best possible score is 0
+print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) 
+print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) 
 
 Y_test_predicted = logistic_regression.predict(X_test) 
 Y_test_predicted_proba = logistic_regression.predict_proba(X_test) 
 
-#Model evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+#Model evaluation
 print("\nModel evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 0
+print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) 
+print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) 
 print("\n-------------------------------------------")
 
 '''

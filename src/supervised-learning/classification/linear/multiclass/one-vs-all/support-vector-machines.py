@@ -37,14 +37,14 @@ Y = digits.target
 #Separates data in rows train/test
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.1, random_state=0)
 
-#Check if X needs to scaling (makes it easy for a model to learn and understand the problem)
+#Check if X needs to scaling 
 print("\nBEFORE scaling")
 print("X train min", np.amin(X_train))
 print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-#Normalize features (preferred vs. StandardScaler, the features upper/lower boundaries are known)
+#Normalize features 
 min_max_scaler = MinMaxScaler()
 X_train = min_max_scaler.fit_transform(X_train)
 X_test = min_max_scaler.transform(X_test)
@@ -61,15 +61,15 @@ svc.fit(X_train, Y_train)
 
 Y_train_predicted = svc.predict(X_train) 
 
-#Model overfitting evaluation (the percentage of samples that were correctly classified)
+#Model overfitting evaluation 
 print("\nModel overfitting evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
+print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) 
 
 Y_test_predicted = svc.predict(X_test) 
 
-#Model evaluation (the percentage of samples that were correctly classified)
+#Model evaluation 
 print("\nModel evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
+print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) 
 
 '''
 The model would appear to be appropriate for this problem.

@@ -46,7 +46,7 @@ Anyway I would try with Ridge and all features.
 The data are points in an hyperspace H of 11 dimensions.
 The goal is to predict the value of the target column Y from the columns X as well as possible. 
 Technically you need to find the "best" hyperplane of 10 dimensions, then the linear function f (weights and biases), in H.
-The "best": in this case we use Ridge that use a Closed-Form solution (for the specified "solver") trying to minimize the RSS cost function.
+The "best": in this case we use Ridge that uses a Closed-Form solution (for the specified "solver") trying to minimize the RSS cost function.
 It imposes a penalty on coefficients with L2 regularization.
 '''
 #Separates data in Dataframe/Series columns data/target 
@@ -84,7 +84,7 @@ Y_train_predicted = ridge.predict(X_train)
 print("\nModel overfitting evaluation")
 print("MAE: ", mean_absolute_error(Y_train, Y_train_predicted))
 print("MSE: ", mean_squared_error(Y_train, Y_train_predicted))
-print("R2 SCORE: ", r2_score(Y_train, Y_train_predicted)) #R2=ESS/TSS, best possible score is 1.0
+print("R2 SCORE: ", r2_score(Y_train, Y_train_predicted)) 
 
 Y_test_predicted = ridge.predict(X_test) 
 
@@ -92,7 +92,7 @@ Y_test_predicted = ridge.predict(X_test)
 print("\nModel evaluation")
 print("MAE: ", mean_absolute_error(Y_test, Y_test_predicted))
 print("MSE: ", mean_squared_error(Y_test, Y_test_predicted))
-print("R2 SCORE: ", r2_score(Y_test, Y_test_predicted)) #R2=ESS/TSS, best possible score is 1.0
+print("R2 SCORE: ", r2_score(Y_test, Y_test_predicted)) 
 
 '''
 R2 score in training is much higher than test.

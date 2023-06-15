@@ -9,6 +9,9 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.datasets import load_diabetes
 
 '''
+K-fold Cross Validation splits training in k folders, and at each iteration (k iterations) it will use k-1 folders for training 
+and one folder for test.
+
 PROS: it reducing the variance of the accuracy and helps to avoid overfitting.
 CONS: it could be increases training time.
 Try to use it with a model previously overfitted.
@@ -53,7 +56,7 @@ Anyway I would try with Linear Regression and all features.
 The data are points in an hyperspace H of 11 dimensions.
 The goal is to predict the value of the target column Y from the columns X as well as possible. 
 Technically you need to find the "best" hyperplane of 10 dimensions, then the linear function f (weights and biases), in H.
-The "best": in this casewe use LinearRegression that use a Closed-Form solution (for SVD) trying to minimize the RSS cost function.
+The "best": in this casewe use LinearRegression that uses a Closed-Form solution (for SVD) trying to minimize the RSS cost function.
 '''
 #Separates data in Dataframe/Series columns data/target 
 X = diabetes.data 
@@ -85,7 +88,7 @@ print("\nK-fold cross validation..")
 
 linear_regression = LinearRegression()
 
-kfold = KFold(n_splits=10) #Splits X_train in n_splits folders, and at each iteration (n_splits iterations) it will use n_splits-1 folders for training and 1 for test
+kfold = KFold(n_splits=10) 
 scores_kfold = []
 
 for (train_indexes, test_indexes) in kfold.split(X_train):
@@ -106,15 +109,15 @@ Y_train_predicted = linear_regression.predict(X_train)
 print("\nModel overfitting evaluation")
 print("MAE: ", mean_absolute_error(Y_train, Y_train_predicted))
 print("MSE: ", mean_squared_error(Y_train, Y_train_predicted))
-print("R2 SCORE: ", r2_score(Y_train, Y_train_predicted)) #R2=ESS/TSS, best possible score is 1.0
+print("R2 SCORE: ", r2_score(Y_train, Y_train_predicted)) 
 
 Y_test_predicted = linear_regression.predict(X_test)
 
-#Model evaluation (distances from real data, and model performance)
+#Model evaluation 
 print("\nModel evaluation")
 print("MAE: ", mean_absolute_error(Y_test, Y_test_predicted))
 print("MSE: ", mean_squared_error(Y_test, Y_test_predicted))
-print("R2 SCORE: ", r2_score(Y_test, Y_test_predicted)) #R2=ESS/TSS, best possible score is 1.0
+print("R2 SCORE: ", r2_score(Y_test, Y_test_predicted))
 
 '''
 R2 score in training is much higher than test.

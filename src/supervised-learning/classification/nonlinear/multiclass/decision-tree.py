@@ -42,15 +42,15 @@ decision_tree_classifier.fit(X_train, Y_train)
 
 Y_train_predicted = decision_tree_classifier.predict(X_train) 
 
-#Model overfitting evaluation (the percentage of samples that were correctly classified)
+#Model overfitting evaluation 
 print("\nModel overfitting evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
+print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) 
 
 Y_test_predicted = decision_tree_classifier.predict(X_test)
 
-#Model evaluation (the percentage of samples that were correctly classified)
+#Model evaluation 
 print("\nModel evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
+print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) 
 
 '''
 The model would appear to be appropriate for this problem.

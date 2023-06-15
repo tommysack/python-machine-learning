@@ -8,6 +8,11 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import accuracy_score
 
 '''
+We suppose that have a training set of n elements, and m the training size in every step of descent.
+In Gradient Descent m = n.
+In Gradient Descent Stochastic m = 1.
+In Mini-batch gradient descent m < n.
+
 PROS: it's faster and appropriate to big dataset.
 CONS: it could be noisier than that of original gradient descent, in every step it's not calculating the actual gradient but an approximation.
 '''
@@ -64,15 +69,15 @@ sgd_classifier.fit(X_train, Y_train)
 
 Y_train_predicted = sgd_classifier.predict(X_train) 
 
-#Model overfit evaluation (the percentage of samples that were correctly classified)
+#Model overfit evaluation 
 print("\nModel overfitting evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
+print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) 
 
 Y_test_predicted = sgd_classifier.predict(X_test) 
 
-#Model evaluation (the percentage of samples that were correctly classified)
+#Model evaluation 
 print("\nModel evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
+print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) 
 
 '''
 The model would appear to be appropriate for this problem.

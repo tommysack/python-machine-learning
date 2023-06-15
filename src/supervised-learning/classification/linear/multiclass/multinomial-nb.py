@@ -25,7 +25,7 @@ news_df.isnull().sum()
 '''
 The data are articles in natural language.
 The goal is to assign a class label Y (multi-class classification with values news_train.target_names) to input X.
-In this case we use MultinomialNB that use Naive Bayes algorithm and it works on Multinomial distribution.
+In this case we use MultinomialNB that uses Naive Bayes algorithm and it works on Multinomial distribution.
 It makes a linear multi-class probabilistic classifier. 
 '''
 
@@ -73,20 +73,20 @@ multinomial.fit(X_train_vector, Y_train)
 Y_train_predicted = multinomial.predict(X_train_vector)
 Y_train_predicted_proba = multinomial.predict_proba(X_train_vector)
 
-#Model overfitting evaluation (the Harmonic Precision-Recall Mean, and the negative likelihood)
+#Model overfitting evaluation 
 print("\nModel overfitting evaluation")
-print("F1 SCORE: ", f1_score(Y_train, Y_train_predicted, average='macro')) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) #Best possible score is 1.0
+print("F1 SCORE: ", f1_score(Y_train, Y_train_predicted, average='macro')) 
+print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) 
 
 X_test_vector = tfidf_vectorizer.transform(X_test)
 
 Y_test_predicted = multinomial.predict(X_test_vector)
 Y_test_predicted_proba = multinomial.predict_proba(X_test_vector)
 
-#Model evaluation (the Harmonic Precision-Recall Mean, and the negative likelihood)
+#Model evaluation 
 print("\nModel evaluation")
-print("F1 SCORE: ", f1_score(Y_test, Y_test_predicted, average='macro')) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 1.0
+print("F1 SCORE: ", f1_score(Y_test, Y_test_predicted, average='macro')) 
+print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) 
 
 '''
 The model would appear moderately overfitted for this problem.

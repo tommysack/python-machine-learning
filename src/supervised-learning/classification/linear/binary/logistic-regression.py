@@ -34,7 +34,7 @@ I would try with Logistic Regression and all features.
 The data are points in an hyperspace H of 32 dimensions.
 The goal is to assign a class label Y (binary classification with values "M" or "B") to input X.
 Technically you need to find the "best" hyperplane of 31 dimensions which best separates the points classified in H.
-The "best": in this case we use LogisticRegression that use "solver" to maximize Likelihood.
+The "best": in this case we use LogisticRegression that uses "solver" to maximize Likelihood.
 It make a linear binary (but is possible multi-class one vs all) probabilistic (returns the probability between 0 and 1 that a point belongs to a class using sigmoid function) 
 classifier. 
 '''
@@ -71,18 +71,18 @@ logistic_regression.fit(X_train, Y_train)
 Y_train_predicted = logistic_regression.predict(X_train) 
 Y_train_predicted_proba = logistic_regression.predict_proba(X_train) 
 
-#Model overfitting evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+#Model overfitting evaluation
 print("\nModel overfitting evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) #Best possible score is 0
+print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) 
+print("LOG LOSS: ", log_loss(Y_train, Y_train_predicted_proba)) 
 
 Y_test_predicted = logistic_regression.predict(X_test) 
 Y_test_predicted_proba = logistic_regression.predict_proba(X_test)
 
-#Model evaluation (the percentage of samples that were correctly classified, and the negative likelihood)
+#Model evaluation
 print("\nModel evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) #Best possible score is 1.0
-print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) #Best possible score is 0
+print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) 
+print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba)) 
 
 '''
 The model would appear to be appropriate for this problem.
