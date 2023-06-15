@@ -47,6 +47,9 @@ docker exec -w /home/ML-py -it ml-py bash
 
   - Linear
     - Linear regression
+    - Ridge regression
+    - Lasso regression
+    
   - Non linear
     - Polynomial regression
 
@@ -61,9 +64,9 @@ docker exec -w /home/ML-py -it ml-py bash
 
     - Multiclass      
       - Logistic regression (one vs all)
-      - Support Vector Machines (one vs all)
-      - Linear Discriminant Analysis
+      - Support Vector Machines (one vs all)      
       - Multinomial Naive Bayes      
+      - Linear Discriminant Analysis
 
   - Non linear
 
@@ -71,6 +74,7 @@ docker exec -w /home/ML-py -it ml-py bash
       - K-nearest Neighbors
       - Decision Tree
       - Random Decision Forest
+      - Multi-layer Perceptron 
 
     - Multiclass
       - K-nearest Neighbors
@@ -80,12 +84,19 @@ docker exec -w /home/ML-py -it ml-py bash
 
 3. Optimization techniques
 
-  - K-fold Cross-Validation
-  - Gradient Descent Stochastic
-  - Randomize Search
-  - Principal Component Analysis
-  - Kernel Principal Component Analysis
-  - Linear Discriminant Analysis
+  - Algorithm optimization
+    - Gradient Descent Stochastic
+
+  - Training data
+    - K-fold Cross-Validation  
+
+  - Hyperparameter model optimization
+    - Randomize Search
+  
+  - Feature analysis 
+    - Principal Component Analysis
+    - Kernel Principal Component Analysis
+    - Linear Discriminant Analysis
 
 
 
