@@ -48,7 +48,7 @@ Anyway I would try with Linear Regression and all features.
 The data are points in an hyperspace H of 11 dimensions.
 The goal is to predict the value of the target column Y from the columns X as well as possible. 
 Technically you need to find the "best" curved surface  of 10 dimensions, then the best polynomial function f (weights and biases), in the H.
-The "best": in this case we use LinearRegression that use a Closed-Form solution trying to minimize the sum of squared residuals OLS.
+The "best": in this case we use LinearRegression that use a Closed-Form solution trying to minimize the sum of squared residuals OLS(RSS).
 '''
 
 #Separates data in Dataframe/Series columns data/target 
@@ -81,7 +81,7 @@ for degree_current in range (2, 6): #Starts from 2, since 1 is Linear Regression
   
   print("\nDEGREE: ", degree_current)
 
-  linear_regression = LinearRegression() #LinearRegression uses Closed-Form/OLS
+  linear_regression = LinearRegression() #LinearRegression uses Closed-Form/OLS(RSS)
   pf = PolynomialFeatures(degree=degree_current)
 
   X_train_poly = pf.fit_transform(X_train)
