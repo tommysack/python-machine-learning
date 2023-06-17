@@ -93,10 +93,17 @@ docker exec -w /home/ML-py -it ml-py bash
   - Hyperparameter model optimization
     - Randomize Search
   
-  - Feature analysis 
+  - Feature extraction techniques
     - Principal Component Analysis
     - Kernel Principal Component Analysis
     - Linear Discriminant Analysis
+
+  - Feature filter methods
+    - Correlation cofficient
+    - Variance threshold
+    - Information gain    
+    - Fisher's score
+    
 
 
 
