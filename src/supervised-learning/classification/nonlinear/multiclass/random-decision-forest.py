@@ -24,7 +24,7 @@ np.isnan(digits_df).any() #Many algorithms do work only with numerical data
 '''
 The data are points in an hyperspace H of 65 dimensions.
 The goal is to assign a class label Y (classification with values 0..9) to input X.
-In this case we use RandomForestClassifier. 
+In this case we use RandomForestClassifier (it aggregates a specified number of decision trees). 
 It make a non-linear multiclass non-probabilistic classifier. 
 '''
 

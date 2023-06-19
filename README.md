@@ -87,22 +87,27 @@ docker exec -w /home/ML-py -it ml-py bash
   - Algorithm optimization
     - Gradient Descent Stochastic
 
-  - Training data
+  - Data training
     - K-fold Cross-Validation  
 
   - Hyperparameter model optimization
     - Randomize Search
   
-  - Feature extraction techniques
+  - Features extraction techniques
     - Principal Component Analysis
     - Kernel Principal Component Analysis
     - Linear Discriminant Analysis
 
-  - Feature filter methods
+  - Features filter methods
     - Correlation cofficient
     - Variance threshold
     - Information gain    
     - Fisher's score
+  
+  - Features selection with embedded methods
+    - Random forest importance
+    - Lasso regularization and select from model
+
     
 
 

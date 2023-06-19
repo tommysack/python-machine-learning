@@ -39,7 +39,8 @@ I would try with Decision Tree Classifier and the features Age, Pclass and Sex.
 The data are points in an hyperspace H of 8 dimensions.
 The goal is to assign a class label Y (binary classification with values 0 or 1) to input X.
 Technically you need to find the "best" hypercurve of 7 dimensions which best separates the points classified in H.
-The "best": in this case we use DecisionTreeClassifier that learning decision rules from the data features.
+The "best": in this case we use DecisionTreeClassifier that illustrate all possible outcomes of a decision
+(In training it chooses the partition maximizing the purity of the points labeled contained in the split nodes). 
 It make a non-linear binary (but is possible multi-class) non-probabilistic classifier. 
 '''
 

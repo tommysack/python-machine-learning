@@ -39,7 +39,7 @@ I would try with Random Decision Forest and the features Age, Pclass and Sex.
 The data are points in an hyperspace H of 8 dimensions.
 The goal is to assign a class label Y (binary classification with values 0 or 1) to input X.
 Technically you need to find the "best" hypercurve of 7 dimensions which best separates the points classified in H.
-The "best": in this case we use RandomForestClassifier.
+The "best": in this case we use RandomForestClassifier (it aggregates a specified number of decision trees).
 It make a non-linear binary (but is possible multi-class) non-probabilistic classifier. 
 '''
 
