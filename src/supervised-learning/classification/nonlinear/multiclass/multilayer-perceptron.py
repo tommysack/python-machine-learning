@@ -27,7 +27,7 @@ np.isnan(digits_df).any() #Many algorithms do work only with numerical data
 The data are points in an hyperspace H of 65 dimensions.
 The goal is to assign a class label Y (classification with values 0..9) to input X.
 In this case we use MLPClassifier that uses "solver" to to minimize Log Loss.
-It make a non-linear multiclass probabilistic classifier. 
+It make a non-linear multi-class probabilistic classifier. 
 '''
 
 #Separates data in Dataframe/Series columns data/target 

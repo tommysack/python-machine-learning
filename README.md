@@ -108,7 +108,13 @@ docker exec -w /home/ML-py -it ml-py bash
     - Random forest importance
     - Lasso regularization and select from model
 
-    
+**Unsupervised Learning**    
+
+1. Classification
+
+  - K-means clustering
+  - Agglomerative hierarchical clustering
+  
 
 
 

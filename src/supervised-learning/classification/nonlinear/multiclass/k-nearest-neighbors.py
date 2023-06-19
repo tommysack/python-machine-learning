@@ -28,7 +28,7 @@ The goal is to assign a class label Y (classification with values 0..9) to input
 In this case we use K-NN classification that assign a class to a point based on the classes of k neighboring points
 (very low k => overfitting). In training phase K-NN does not learn any model ("lazy"), 
 and the predictions are made just-in-time by calculating the similarity. 
-It make a non-linear multiclass non-probabilistic classifier. 
+It make a non-linear multi-class non-probabilistic classifier. 
 '''
 
 #Separates data in Dataframe/Series columns data/target 
