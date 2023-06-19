@@ -4,8 +4,9 @@ from sklearn.datasets import make_blobs
 
 #It creates 250 points to distribute in clusters, with 3 features, 5 centroids and 0.8 cluster std deviation.
 X, Y = make_blobs(n_samples=250, n_features=3, centers=5, cluster_std=0.8)
-np.unique(np.array(Y.tolist())) #array([0, 1, 2, 3, 4]) => multi-class classification
+
 #General info
+np.unique(np.array(Y.tolist())) #array([0, 1, 2, 3, 4]) => multi-class classification
 X.shape #250 rows, 3 columns
 Y.shape #250 row, 1 column
 
