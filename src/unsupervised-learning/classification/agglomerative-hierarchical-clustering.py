@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.cluster import AgglomerativeClustering, KMeans
 from sklearn.datasets import make_blobs
 
-#It creates 250 points to distribute in clusters, with 3 features, 5 centroids and 0.8 cluster std deviation.
+#It creates 250 points to distribute in clusters, with 3 features, 5 centroids and 0.8 cluster std deviation
 X, Y = make_blobs(n_samples=250, n_features=3, centers=5, cluster_std=0.8)
 
 #General info
@@ -12,7 +12,7 @@ Y.shape #250 row, 1 column
 
 '''
 The data are points in an hyperspace H of 4 dimensions.
-The goal is to assign a class label Y (classification with values 0..9) to input X.
+The goal is to assign a class label Y to input X.
 In this case we use the Agglomerative Hierarchical Clustering.
 It make an unsupervised non-linear multi-class classifier.  
 '''
@@ -27,11 +27,11 @@ Agglomerative Hierarchical Clustering steps:
 The clusters are represented by a dendrogram, that visualize the merging process as different levels.
 Than you should cut the dendrogram at a given height (which identifies the maximum distance between the clusters) to partition your data into clusters.
 
-PROS: it doesn't require to predefine K parameter.
-CONS: it's not better solution for large dataset.
+PROS: it doesn't require to predefine K parameter
+CONS: it's not better solution for large dataset
 '''
 
-agglomerative_clustering = AgglomerativeClustering(n_clusters=3) 
+agglomerative_clustering = AgglomerativeClustering() 
 
-Y_pred = agglomerative_clustering.fit_predict(X)
+Y_predicted = agglomerative_clustering.fit_predict(X)
 

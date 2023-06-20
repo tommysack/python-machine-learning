@@ -18,7 +18,9 @@ breast_cancer_df = pd.DataFrame(breast_cancer.data, columns=breast_cancer.featur
 X = breast_cancer.data
 Y = breast_cancer.target
 
-variance_threshold = VarianceThreshold(threshold=0.001) 
+variance_threshold = VarianceThreshold(
+  threshold=0.001 #features with variance lower than this will be removed
+) 
 variance_threshold.fit(X)
 
 variance_threshold.get_support()

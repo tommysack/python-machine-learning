@@ -37,7 +37,7 @@ news_test = fetch_20newsgroups(subset="test")
 X_test = news_test.data 
 Y_test = news_test.target
 
-multinomial = MultinomialNB(alpha=1)
+multinomial = MultinomialNB()
 
 #MultinomialNB is designed for integer feature counts, than we need encoding. 
 #We can encode X with "bag of words" CountVectorizer.
@@ -64,7 +64,10 @@ multinomial = MultinomialNB(alpha=1)
 #   return tokens_processed
 
 #tfidf_vectorizer = TfidfVectorizer(lowercase=True, tokenizer=tokenizer, stop_words='english')
-tfidf_vectorizer = TfidfVectorizer(lowercase=True, stop_words='english')
+tfidf_vectorizer = TfidfVectorizer(
+  lowercase=True, 
+  stop_words='english' #terms to be ignored 
+)
 
 X_train_vector = tfidf_vectorizer.fit_transform(X_train) 
 

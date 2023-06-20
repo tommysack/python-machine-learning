@@ -60,7 +60,12 @@ print("X_pca number of culumns:", X_pca.shape[1])
 #Separates data in rows train/test 
 X_train, X_test, Y_train, Y_test = train_test_split(X_pca, Y, test_size=0.3, random_state=0)
 
-logistic_regression = LogisticRegression(penalty='l2', C=0.1, solver='lbfgs') #l2 regularisation to avoid overfitting, C inverse of regularization strength
+logistic_regression = LogisticRegression(
+  penalty='l2', #L2 regularization to avoid overfitting 
+  C=0.1, #inverse of regularization strength (C lower => Higher regularization)
+  solver='lbfgs', #algorithm to use
+  verbose=True
+) 
 logistic_regression.fit(X_train, Y_train) 
 
 Y_train_predicted = logistic_regression.predict(X_train) 
@@ -86,7 +91,12 @@ print("\n----------------------------------------")
 #Separates data in rows train/test 
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_state=0)
 
-logistic_regression = LogisticRegression(penalty='l2', C=0.1, solver='lbfgs') #l2 regularisation to avoid overfitting, C inverse of regularization strength
+logistic_regression = LogisticRegression(
+  penalty='l2', #L2 regularization to avoid overfitting 
+  C=0.1, #inverse of regularization strength (C lower => Higher regularization)
+  solver='lbfgs', #algorithm to use
+  verbose=True
+) 
 logistic_regression.fit(X_train, Y_train)
 
 Y_train_predicted = logistic_regression.predict(X_train) 

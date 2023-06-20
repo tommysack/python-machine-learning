@@ -57,14 +57,14 @@ print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
 mlp_classifier = MLPClassifier(
-  hidden_layer_sizes=(10), #Each tupla's element represents the numbers of neurons in its specific layer
-  activation='relu', #Activation function 
-  solver='adam', #The algorithm to use for weight optimization
-  alpha=0.001, #Constant that multiplies the L2 regularization
-  batch_size='auto', #Size of minibatches 
-  learning_rate='constant', #The rate to update the weights
-  #max_iter=200, #Max number of iterations 
-  early_stopping=True, #To stop training iterations when the score is not improving
+  hidden_layer_sizes=(10), #each tupla's element represents the numbers of neurons in its specific layer
+  activation='relu', #activation function 
+  solver='adam', #the algorithm to use for weight optimization
+  alpha=0.001, #constant that multiplies the L2 regularization
+  batch_size='auto', #size of minibatches 
+  learning_rate='constant', #the rate to update the weights
+  #max_iter=200, #max number of iterations 
+  early_stopping=True, #to stop training iterations when the score is not improving
   verbose=True
 )
 mlp_classifier.fit(X_train, Y_train)

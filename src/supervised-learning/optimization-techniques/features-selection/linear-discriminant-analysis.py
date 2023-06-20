@@ -52,11 +52,18 @@ print("X max", np.amax(X))
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_state=0)
 
 #Let's build the model WITH LDA
-lda = LDA(n_components=2)
+lda = LDA(
+  n_components=2
+)
 X_train_lda = lda.fit_transform(X_train, Y_train)
 X_test_lda = lda.transform(X_test)
 
-logistic_regression = LogisticRegression(penalty='l2', C=0.1, solver='lbfgs') #l2 regularisation to avoid overfitting, C inverse of regularization strength
+logistic_regression = LogisticRegression(
+  penalty='l2', #L2 regularization to avoid overfitting 
+  C=10.0, #inverse of regularization strength (C lower => Higher regularization)
+  solver='lbfgs', #algorithm to use
+  verbose=True
+) 
 logistic_regression.fit(X_train_lda, Y_train) 
 
 Y_train_predicted = logistic_regression.predict(X_train_lda) 
@@ -78,7 +85,12 @@ print("LOG LOSS: ", log_loss(Y_test, Y_test_predicted_proba))
 print("\n----------------------------------------")
 
 #Let's build the model WITHOUT LDA
-logistic_regression = LogisticRegression(penalty='l2', C=0.1, solver='lbfgs') #l2 regularisation to avoid overfitting, C inverse of regularization strength
+logistic_regression = LogisticRegression(
+  penalty='l2', #L2 regularization to avoid overfitting 
+  C=10.0, #inverse of regularization strength (C lower => Higher regularization)
+  solver='lbfgs', #algorithm to use
+  verbose=True
+) 
 logistic_regression.fit(X_train, Y_train) 
 
 Y_train_predicted = logistic_regression.predict(X_train) 

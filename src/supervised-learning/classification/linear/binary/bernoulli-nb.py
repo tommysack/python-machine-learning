@@ -38,7 +38,11 @@ bernoulli = BernoulliNB()
 #BernoulliNB is designed for binary/boolean features, than we need one-hot encoding. 
 #We can encode X with "bag of words" CountVectorizer using binary=True parameter (One-hot).
 #It returns scipy.sparse._csr.csr_matrix that is allowed for train_test_split 
-count_vectorizer = CountVectorizer(binary=True, lowercase=True, stop_words='english')
+count_vectorizer = CountVectorizer(
+  lowercase=True, 
+  stop_words='english', #terms to be ignored 
+  binary=True #all non zero values are set to 1 (for binary classification)
+)
 
 X_train_vector = count_vectorizer.fit_transform(X_train) 
 

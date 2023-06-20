@@ -17,7 +17,12 @@ breast_cancer_df = pd.DataFrame(breast_cancer.data, columns=breast_cancer.featur
 X = breast_cancer.data
 Y = breast_cancer.target
 
-logistic_regression = LogisticRegression(penalty='l2', C=10.0, solver='lbfgs')
+logistic_regression = LogisticRegression(
+  penalty='l2', #L2 regularization to avoid overfitting 
+  C=10.0, #inverse of regularization strength (C lower => Higher regularization)
+  solver='lbfgs', #algorithm to use
+  verbose=True
+) 
 logistic_regression.fit(X, Y)
 
 #SelectFromModel dropes the features relying to importance weights (default=median)

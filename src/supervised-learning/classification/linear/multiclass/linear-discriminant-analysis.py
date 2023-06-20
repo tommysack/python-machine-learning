@@ -54,7 +54,9 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-lda = LDA(solver='svd')
+lda = LDA(
+  solver='svd' #algorithm to use
+)
 lda.fit(X_train, Y_train) 
 
 Y_train_predicted = lda.predict(X_train) 

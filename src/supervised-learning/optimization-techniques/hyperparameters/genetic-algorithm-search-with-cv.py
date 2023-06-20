@@ -2,10 +2,19 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 from sklearn.datasets import load_digits
+from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.svm import LinearSVC
-from sklearn.metrics import accuracy_score
+from sklearn_genetic import GASearchCV
+from sklearn_genetic.space import Continuous, Categorical, Integer
+
+'''
+Genetic opt performes hyperparameter tuning to determine the optimal values, and uses cross validation method.
+It uses genetic algorithms to explore the hyperparameter space and to find the best hyperparameters.
+
+PROS: parallelizability and flexibility (in terms of the search space and fitness function).
+CONS: could be computationally expensive and if not properly configured, may suffer from premature convergence.
+'''
 
 #Load data
 digits = load_digits()
@@ -25,9 +34,7 @@ np.isnan(digits_df).any() #Many algorithms do work only with numerical data
 '''
 The data are points in an hyperspace H of 65 dimensions.
 The goal is to assign a class label Y (classification with values 0..9) to input X.
-The one vs all approach consists in to split a multi-classification problem into multiple binary classifier method (building one model for every single class, 
-predicting a new case over every model and taking the model with higher probability).
-In this case we use LinearSVC.
+In this case we use RandomForestClassifier.
 '''
 
 #Separates data in Dataframe/Series columns data/target 
@@ -37,14 +44,14 @@ Y = digits.target
 #Separates data in rows train/test
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.1, random_state=0)
 
-#Check if X needs to scaling 
+#Check if X needs to scaling (makes it easy for a model to learn and understand the problem)
 print("\nBEFORE scaling")
 print("X train min", np.amin(X_train))
 print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-#Normalize features 
+#Normalize features (preferred vs. StandardScaler, the features upper/lower boundaries are known)
 min_max_scaler = MinMaxScaler()
 X_train = min_max_scaler.fit_transform(X_train)
 X_test = min_max_scaler.transform(X_test)
@@ -56,25 +63,45 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-svc = LinearSVC(
-  penalty='l2', #L2 regularization to avoid overfitting  
-  C=0.01, #inverse of regularization strength (C lower => Higher regularization)
-  verbose=True
+svc = SVC() #Support Vector Machine (search estimator: must implement the scikit estimator interface)
+param_grid = { #Hyperparameter to tuning
+  "C": Continuous(1, 100),
+  "kernel": Categorical(["linear", "rbf", "sigmoid", "poly"]),  
+  "gamma": Categorical([0.1, 1, "auto"]),
+  "decision_function_shape": Categorical(["ovo", "ovr"])
+}
+ga_search_cv = GASearchCV(
+  estimator=svc, 
+  cv=3, #num of folds in a KFold 
+  param_grid=param_grid, #dictionary with parameters names 
+  population_size=10, #size of the initial population 
+  generations=5, #num of iterations
+  verbose=True, 
+  n_jobs=-1
 )
-svc.fit(X_train, Y_train) 
+ga_search_cv.fit(X_train, Y_train)
 
-Y_train_predicted = svc.predict(X_train) 
+print(ga_search_cv.best_params_)
+#Output:
+#{'C': 66.87697973890998, 
+# 'kernel': 'rbf', 
+# 'gamma': 0.1, 
+# 'decision_function_shape': 'ovr'}
 
-#Model overfitting evaluation 
-print("\nModel overfitting evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_train, Y_train_predicted)) 
-
-Y_test_predicted = svc.predict(X_test) 
+svc = ga_search_cv.best_estimator_
 
 #Model evaluation 
+print("\nModel overfitting evaluation")
+print("ACCURACY SCORE: ", svc.score(X_train, Y_train)) 
+
+#Model evaluation
 print("\nModel evaluation")
-print("ACCURACY SCORE: ", accuracy_score(Y_test, Y_test_predicted)) 
+print("ACCURACY SCORE: ", svc.score(X_test, Y_test)) 
 
 '''
 The model would appear to be appropriate for this problem.
 '''
+
+
+
+

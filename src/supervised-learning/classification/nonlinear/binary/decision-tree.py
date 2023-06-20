@@ -26,7 +26,7 @@ passengers_df.corr()['Survived'].sort_values() #There may be a correlation with 
 sns.barplot(data=passengers_df, x='Sex', y='Survived') #The female(1) have survival average more than male(0)
 sns.barplot(data=passengers_df, x='Pclass', y='Survived') #The Pclass(3) flu the survival average 
 def map_age(age): 
-    return round(age / 10)
+  return round(age / 10)
 passengers_df['Age_block'] = passengers_df['Age'].apply(lambda age: map_age(age))
 sns.barplot(data=passengers_df, x='Age_block', y='Survived')
 sns.barplot(data=passengers_df, x='Age_block', y='Survived', hue='Sex') #The Age flu the survival average
@@ -52,7 +52,10 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_
 
 #Decision trees are not sensitive to feature scaling
 
-decision_tree_classifier = DecisionTreeClassifier(criterion="gini", max_depth=6)
+decision_tree_classifier = DecisionTreeClassifier(
+  criterion="gini", #to measure the quality of a split
+  max_depth=6 
+)
 decision_tree_classifier.fit(X_train, Y_train) 
 
 Y_train_predicted = decision_tree_classifier.predict(X_train) 

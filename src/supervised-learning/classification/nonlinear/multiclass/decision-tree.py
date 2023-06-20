@@ -38,7 +38,10 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.1, random_
 
 #Decision trees are not sensitive to feature scaling
 
-decision_tree_classifier = DecisionTreeClassifier(criterion="gini", max_depth=6)
+decision_tree_classifier = DecisionTreeClassifier(
+  criterion="gini", #to measure the quality of a split
+  max_depth=6 
+)
 decision_tree_classifier.fit(X_train, Y_train) 
 
 Y_train_predicted = decision_tree_classifier.predict(X_train) 

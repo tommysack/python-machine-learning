@@ -2,13 +2,16 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 from sklearn.datasets import load_digits
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, train_test_split
+from sklearn.model_selection import RandomizedSearchCV, train_test_split
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.svm import SVC, LinearSVC
-from sklearn.metrics import accuracy_score
+from sklearn.svm import SVC
 
 '''
-Randomize Search performes hyperparameter tuning to determine the optimal values, and use cross validation method.
+Randomize Search performes hyperparameter tuning to determine the optimal values, and uses cross validation method.
+It randomly sampling different combinations of hyperparameter from predefined ranges or distributions.
+
+PROS: efficiency and scalability.
+CONS: while it explores the space it may not allocate enough resources to exploit regions that show good performance.
 '''
 
 #Load data
@@ -29,8 +32,6 @@ np.isnan(digits_df).any() #Many algorithms do work only with numerical data
 '''
 The data are points in an hyperspace H of 65 dimensions.
 The goal is to assign a class label Y (classification with values 0..9) to input X.
-The one vs all approach consists in to split a multi-classification problem into multiple binary classifier method (building one model for every single class, 
-predicting a new case over every model and taking the model with higher probability).
 In this case we use SVC.
 '''
 
@@ -67,10 +68,21 @@ param_grid = { #Hyperparameter to tuning
   "gamma": [0.1, 1, "auto"],
   "decision_function_shape": ["ovo", "ovr"]
 }
-search = RandomizedSearchCV(svc, param_grid, cv=10)
-search.fit(X_train, Y_train)
+randomized_search_cv = RandomizedSearchCV(
+  estimator=svc, 
+  param_distributions=param_grid, #dictionary with parameters names
+  cv=10 #num of folds in a KFold
+)
+randomized_search_cv.fit(X_train, Y_train)
 
-svc = search.best_estimator_
+#print(randomized_search_cv.best_params_)
+#Output:
+#{'kernel': 'poly',
+# 'gamma': 'auto',
+# 'decision_function_shape': 'ovr',
+# 'C': 1000}
+
+svc = randomized_search_cv.best_estimator_
 
 #Model evaluation 
 print("\nModel overfitting evaluation")

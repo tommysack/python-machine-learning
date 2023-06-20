@@ -64,7 +64,9 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-sgd_classifier = SGDClassifier(loss="hinge") #hinge gives a linear SVM
+sgd_classifier = SGDClassifier(
+  loss="hinge" #hinge gives a linear SVM
+) 
 sgd_classifier.fit(X_train, Y_train)
 
 Y_train_predicted = sgd_classifier.predict(X_train) 

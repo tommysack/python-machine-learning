@@ -92,6 +92,7 @@ docker exec -w /home/ML-py -it ml-py bash
 
   - Hyperparameter model optimization
     - Randomize Search
+    - Genetic Opt
   
   - Features extraction techniques
     - Principal Component Analysis
@@ -99,21 +100,22 @@ docker exec -w /home/ML-py -it ml-py bash
     - Linear Discriminant Analysis
 
   - Features filter methods
-    - Correlation cofficient
-    - Variance threshold
-    - Information gain    
-    - Fisher's score
+    - Correlation Cofficient
+    - Variance Threshold
+    - Information Gain    
+    - Fisher's Score
   
   - Features selection with embedded methods
-    - Random forest importance
-    - Lasso regularization and select from model
+    - Random Forest Importance
+    - Lasso Regularization and Select From Model
 
 **Unsupervised Learning**    
 
 1. Classification
 
-  - K-means clustering
-  - Agglomerative hierarchical clustering
+  - K-means Clustering
+  - Agglomerative Hierarchical Clustering
+  - DB Ccan
   
 
 

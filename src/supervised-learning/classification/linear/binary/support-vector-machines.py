@@ -79,7 +79,11 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-svc = LinearSVC(penalty='l2', C=0.01)
+svc = LinearSVC(
+  penalty='l2', #L2 regularization to avoid overfitting  
+  C=0.01, #inverse of regularization strength (C lower => Higher regularization)
+  verbose=True
+)
 svc.fit(X_train, Y_train) 
 
 Y_train_predicted = svc.predict(X_train) 

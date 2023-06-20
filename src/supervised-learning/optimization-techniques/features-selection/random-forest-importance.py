@@ -19,7 +19,11 @@ digits = load_digits()
 X = digits.data 
 Y = digits.target 
 
-random_forest_classifier = RandomForestClassifier(n_estimators=10, criterion="gini", max_depth=10, random_state=False)
+random_forest_classifier = RandomForestClassifier(
+  n_estimators=10, #the number of trees
+  criterion="gini", #to measure the quality of a split
+  max_depth=10
+)
 random_forest_classifier.fit(X, Y)
 
 importances_df = pd.DataFrame({"features": digits.feature_names, "importances": random_forest_classifier.feature_importances_}).sort_values('importances')

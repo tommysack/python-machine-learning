@@ -66,13 +66,16 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-num_neighbors = [4,5,7,10,12,15,18,20, 25] 
+num_neighbors = [4, 5, 7, 10, 12, 15, 18, 20, 25] 
 
 for K in num_neighbors:
 
   print("K=", str(K))
 
-  kn_classifier = KNeighborsClassifier(n_neighbors=K, algorithm='auto', metric='minkowski')  
+  kn_classifier = KNeighborsClassifier(
+    n_neighbors=K, #num of neighbors to use
+    metric='minkowski' #to use for distance computation
+  )  
   kn_classifier.fit(X_train,Y_train)
 
   Y_train_predicted = kn_classifier.predict(X_train)

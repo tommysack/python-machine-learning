@@ -63,7 +63,10 @@ for K in num_neighbors:
 
   print("\nK=", str(K))
 
-  kn_classifier = KNeighborsClassifier(n_neighbors=K, algorithm='auto', metric='minkowski')  
+  kn_classifier = KNeighborsClassifier(
+    n_neighbors=K, #num of neighbors to use
+    metric='minkowski' #to use for distance computation
+  ) 
   kn_classifier.fit(X_train,Y_train)
 
   Y_train_predicted = kn_classifier.predict(X_train)
