@@ -9,7 +9,7 @@ from sklearn_genetic import GASearchCV
 from sklearn_genetic.space import Continuous, Categorical, Integer
 
 '''
-Genetic opt performes hyperparameter tuning to determine the optimal values, and uses cross validation method.
+Genetic algorithm performes hyperparameter tuning to determine the optimal values, and uses cross validation method.
 It uses genetic algorithms to explore the hyperparameter space and to find the best hyperparameters.
 
 PROS: parallelizability and flexibility (in terms of the search space and fitness function).

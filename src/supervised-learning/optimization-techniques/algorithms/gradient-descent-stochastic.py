@@ -8,13 +8,19 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import accuracy_score
 
 '''
-We suppose that have a training set of n elements, and m the training size in every step of descent.
+We suppose that have a training set of n elements, and m the number of training elements used to update the gradient in its descent.
 In Gradient Descent m = n.
-In Gradient Descent Stochastic m = 1.
+In Gradient Descent Stochastic m = 1 (the element is chosen stochastically).
 In Mini-batch gradient descent m < n.
 
-PROS: it's faster and appropriate to big dataset.
-CONS: it could be noisier than that of original gradient descent, in every step it's not calculating the actual gradient but an approximation.
+Gradient Descent
+PROS: convergence to the global minimum with small learning rate for convex problems.
+CONS: could be requires more time and memory resources, and could be convergence to the local minimum for non-convex problems.
+
+Gradient Descent Stochastic
+
+PROS: reduces the computational and memory requirements, and its stochastic nature introduces noise which reduces overfitting.
+CONS: could not converge to the global minimum, and requires tuning of the learning rate to avoid that it converges slowly or not at all.
 '''
 
 #Load data

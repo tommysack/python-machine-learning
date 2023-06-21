@@ -2,21 +2,13 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.model_selection import KFold, train_test_split
+
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import SGDRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
 from sklearn.datasets import load_diabetes
-
-'''
-K-fold Cross Validation splits training in k folders, and at every iteration (k iterations) it will use k-1 folders for training 
-and one folder for "validation".
-Than final evaluation will be done on the test set.
-
-PROS: it reducing the variance of the accuracy and helps to avoid overfitting.
-CONS: it could be increases training time.
-Try to use it with a model previously overfitted.
-'''
 
 #Load data
 diabetes = load_diabetes()
@@ -25,7 +17,6 @@ diabetes = load_diabetes()
 print(diabetes.DESCR) #Patients 10 columns of information and 1 column quantitative measure of disease progression one year after
 diabetes_df = pd.DataFrame(diabetes.data, columns=["age","sex","bmi","bp","tc","ldl","hdl","tch","ltg","glu"])
 diabetes_df['progression'] = diabetes.target
-diabetes_df['progression'].unique()
 diabetes_df.head()
 diabetes_df.describe() 
 diabetes_df.shape #11 columns, 442 rows
@@ -50,14 +41,14 @@ plt.ylabel('Progression')
 
 '''
 The data points are too far from regression lines. 
-Anyway I would try with Linear Regression and all features.
+Anyway I would try with Gradient Descent Stochastic Linear Regression and all features.
 '''
 
 '''
 The data are points in an hyperspace H of 11 dimensions.
 The goal is to predict the value of the target column Y from the columns X as well as possible. 
 Technically you need to find the "best" hyperplane of 10 dimensions, then the linear function f (weights and biases), in H.
-The "best": in this casewe use LinearRegression that uses a Closed-Form solution (for SVD) trying to minimize the RSS cost function.
+The "best": in this case we use SGDRegressor that uses Gradient Descent Stochastic to minimize "loss".
 '''
 #Separates data in Dataframe/Series columns data/target 
 X = diabetes.data 
@@ -85,26 +76,16 @@ print("X test min", np.amin(X_test))
 print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
-print("\nK-fold cross validation..")
+sgd_regressor = SGDRegressor(
+  loss='squared_error', #loss function to use by SGD
+  penalty='l2', #L2 regularization to avoid overfitting 
+  alpha=1, #constant that multiplies the L2 regularization
+  learning_rate='invscaling',
+  early_stopping=True #to stop training iterations when the score is not improving
+) 
+sgd_regressor.fit(X_train, Y_train) 
 
-linear_regression = LinearRegression()
-
-kfold = KFold(n_splits=10) 
-scores_kfold = []
-
-for (train_indexes, validation_indexes) in kfold.split(X_train):
-
-  linear_regression.fit(X_train[train_indexes], Y_train[train_indexes])
-
-  score_kfold = linear_regression.score(X_train[validation_indexes], Y_train[validation_indexes])
-  scores_kfold.append(score_kfold)
-
-  print("LINEAR REGRESSION SCORE: ", score_kfold)
-
-mean_score = np.array(scores_kfold).mean()
-print("\MEAN LINEAR REGRESSION SCORE: ", mean_score)
-
-Y_train_predicted = linear_regression.predict(X_train)
+Y_train_predicted = sgd_regressor.predict(X_train) 
 
 #Model overfitting evaluation
 print("\nModel overfitting evaluation")
@@ -112,15 +93,17 @@ print("MAE: ", mean_absolute_error(Y_train, Y_train_predicted))
 print("MSE: ", mean_squared_error(Y_train, Y_train_predicted))
 print("R2 SCORE: ", r2_score(Y_train, Y_train_predicted)) 
 
-Y_test_predicted = linear_regression.predict(X_test)
+Y_test_predicted = sgd_regressor.predict(X_test) 
 
 #Model evaluation 
 print("\nModel evaluation")
 print("MAE: ", mean_absolute_error(Y_test, Y_test_predicted))
 print("MSE: ", mean_squared_error(Y_test, Y_test_predicted))
-print("R2 SCORE: ", r2_score(Y_test, Y_test_predicted))
+print("R2 SCORE: ", r2_score(Y_test, Y_test_predicted)) 
 
 '''
 R2 score in training is much higher than test.
 The model would appear to be inappropriate for this problem.
 '''
+
+

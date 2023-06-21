@@ -46,24 +46,25 @@ docker exec -w /home/ML-py -it ml-py bash
 1. Regression
 
   - Linear
-    - Linear regression
-    - Ridge regression
-    - Lasso regression
+    - Linear Regression
+    - Ridge Regression
+    - Lasso Regression
+    - Gradient Descent Stochastic Linear Regression
     
   - Non linear
-    - Polynomial regression
+    - Polynomial Regression
 
 2. Classification
 
   - Linear
 
     - Binary      
-      - Logistic regression
+      - Logistic Regression
       - Support Vector Machines
       - Bernoulli Naive Bayes
 
     - Multiclass      
-      - Logistic regression (one vs all)
+      - Logistic Regression (one vs all)
       - Support Vector Machines (one vs all)      
       - Multinomial Naive Bayes      
       - Linear Discriminant Analysis
@@ -92,7 +93,7 @@ docker exec -w /home/ML-py -it ml-py bash
 
   - Hyperparameter model optimization
     - Randomize Search
-    - Genetic Opt
+    - Genetic Algorithm Search 
   
   - Features extraction techniques
     - Principal Component Analysis
@@ -115,7 +116,7 @@ docker exec -w /home/ML-py -it ml-py bash
 
   - K-means Clustering
   - Agglomerative Hierarchical Clustering
-  - DB Ccan
+  - DB Scan
   
 
 
