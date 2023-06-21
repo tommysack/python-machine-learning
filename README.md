@@ -22,22 +22,32 @@ docker exec -w /home/ML-py -it ml-py bash
 **Regression**
 
 - MAE (Mean Absolute Error)
+  - MAE = (1 / n) * Σ (Y_predicted - Y)
 
 - MSE (Mean Squared Error)
+  - MSE = (1 / n) * Σ (Y_predicted - Y)^2
 
 - R2 score (Coefficient of determination)
-  - R2 = ESS / TSS (best score is 1.0)
+  - SSR = Σ (Y - Y_predicted)^2
+  - SST = Σ (Y - mean(Y))^2
+  - R2 = 1 - (SSR / SST) 
+  - Best score is 1.0
 
 **Classification**
 
-- Accuracy score (the percentage of samples that were correctly classified)
-  - Num of correct predictions / Total num of predictions (best score is 1.0)
+- Accuracy score (The percentage of samples that were correctly classified)
+  - Accuracy = Num of correct predictions / Total num of samples 
+  - Best score is 1.0
 
 - F1 score (Harmonic Precision-Recall Mean)
+  - Precision = True Positives / (True Positives + False Positives)
+  - Recall = True Positives / (True Positives + False Negatives)
+  - F1 Score = 2 * (Precision * Recall) / (Precision + Recall)
   - Best score is 1.0
 
 - Log loss (Negative Likelihood)
-  - -1 * log-likelihood (best score is 0)
+  - Log Loss = - (1 / num of samples) * Σ [Y * log(Y_predicted) + (1 - Y) * log(1 - Y_predicted)]
+  - Best score is 0
 
 ## The source folder
 
