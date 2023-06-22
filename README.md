@@ -118,8 +118,8 @@ docker exec -w /home/ML-py -it ml-py bash
   
   - Features selection with embedded methods
     - Random Forest Importance
-    - Lasso Regularization and Select From Model
-
+    - Lasso Regularization and Select From Model  
+  
 **Unsupervised Learning**    
 
 1. Classification

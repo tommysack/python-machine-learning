@@ -5,7 +5,7 @@ from sklearn.linear_model import LogisticRegression
 
 '''
 It is an embedded feature selection because the selection occurs during model fitting.
-Lasso that can shrink some of the weights to zero, than some feature can be dropped.
+Lasso that can shrink some of the weights to zero, then some feature can be dropped.
 '''
 
 #Load data

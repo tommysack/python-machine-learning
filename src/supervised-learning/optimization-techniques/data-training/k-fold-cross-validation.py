@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.model_selection import KFold, train_test_split
+from sklearn.model_selection import cross_val_score,KFold, train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
@@ -90,19 +90,42 @@ print("\nK-fold cross validation..")
 linear_regression = LinearRegression()
 
 kfold = KFold(n_splits=10) 
-scores_kfold = []
+
+'''
+cross_val_score fits the model using KFold and calculates the score.
+Than we calculate the mean of the k scores.
+'''
+r2scores = cross_val_score(linear_regression, X_train, Y_train, scoring='r2', cv=kfold)
+r2score_mean = r2scores.mean()
+
+print("\nR2 SCORE MEAN with 'cross_val_score': ", r2score_mean, "\n")
+
+'''
+To have more control over the training and evaluation process, 
+we can use kfold.split to manually control the splitting of the data.
+'''
+
+r2scores_kfold = []
 
 for (train_indexes, validation_indexes) in kfold.split(X_train):
 
-  linear_regression.fit(X_train[train_indexes], Y_train[train_indexes])
+  x_train = X_train[train_indexes]
+  y_train = Y_train[train_indexes]
+  x_validation = X_train[validation_indexes]
+  y_validation = Y_train[validation_indexes]
 
-  score_kfold = linear_regression.score(X_train[validation_indexes], Y_train[validation_indexes])
-  scores_kfold.append(score_kfold)
+  linear_regression.fit(x_train, y_train)
 
-  print("LINEAR REGRESSION SCORE: ", score_kfold)
+  y_validation_predicted = linear_regression.predict(x_validation)
 
-mean_score = np.array(scores_kfold).mean()
-print("\MEAN LINEAR REGRESSION SCORE: ", mean_score)
+  r2score_kfold =  r2_score(y_validation, y_validation_predicted)
+  r2scores_kfold.append(r2score_kfold)
+  print("R2 SCORE FOLD: ", r2score_kfold)
+
+r2score_mean = np.array(r2scores_kfold).mean()
+print("\nR2 SCORE MEAN with 'kfold.split': ", r2score_mean)
+
+#Then we can calculate the model scores in the usual way including also Y_test 
 
 Y_train_predicted = linear_regression.predict(X_train)
 
@@ -124,3 +147,6 @@ print("R2 SCORE: ", r2_score(Y_test, Y_test_predicted))
 R2 score in training is much higher than test.
 The model would appear to be inappropriate for this problem.
 '''
+
+
+

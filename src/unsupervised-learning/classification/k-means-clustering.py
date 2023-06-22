@@ -50,5 +50,5 @@ for k in range(1, 11):
   print("----------------------------")
 
 '''
-From k>5 SSE it doesn't drop as fast as before, than we can use 5 clusters.
+From k>5 SSE it doesn't drop as fast as before, then we can use 5 clusters.
 '''

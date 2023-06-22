@@ -5,7 +5,7 @@ from sklearn.datasets import load_breast_cancer
 
 '''
 It misures the linear relationship between the features.
-If two features are correlated, than we can predict one from the other.
+If two features are correlated, then we can predict one from the other.
 Generally we drop the feature which has less correlation with the target.
 '''
 

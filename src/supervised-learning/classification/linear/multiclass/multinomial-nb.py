@@ -39,7 +39,7 @@ Y_test = news_test.target
 
 multinomial = MultinomialNB()
 
-#MultinomialNB is designed for integer feature counts, than we need encoding. 
+#MultinomialNB is designed for integer feature counts, then we need encoding. 
 #We can encode X with "bag of words" CountVectorizer.
 
 #To transforms the matrix to tf-idf representation we can encode with TfidfTransformer. 

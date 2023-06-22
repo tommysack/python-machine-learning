@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 '''
 PCA is unsupervised learning technique to use when your data has linear relationships between features.
 
-PROS: it converts high dimensional data to low dimensional data, than it removes correlated features, prevents overfitting, 
+PROS: it converts high dimensional data to low dimensional data, then it removes correlated features, prevents overfitting, 
 and improves the performance.
 CONS: the original features are transformed into principal components that are linear combinations of the features. 
 Than it may become more difficult to understand what they are the most significant features after PCA.

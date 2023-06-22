@@ -35,7 +35,7 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_
 
 bernoulli = BernoulliNB()
 
-#BernoulliNB is designed for binary/boolean features, than we need one-hot encoding. 
+#BernoulliNB is designed for binary/boolean features, then we need one-hot encoding. 
 #We can encode X with "bag of words" CountVectorizer using binary=True parameter (One-hot).
 #It returns scipy.sparse._csr.csr_matrix that is allowed for train_test_split 
 count_vectorizer = CountVectorizer(

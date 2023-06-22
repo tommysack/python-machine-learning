@@ -5,7 +5,7 @@ from skfeature.function.similarity_based import fisher_score
 
 '''
 It is commonly used to select the variable that minimizes the Fisher's score.
-The Fisher's score is the gradient or the derivative of the log-likelihood, than when the score = 0
+The Fisher's score is the gradient or the derivative of the log-likelihood, then when the score = 0
 we have the maximum likelihood.
 '''
 

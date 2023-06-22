@@ -19,7 +19,7 @@ X = breast_cancer.data
 Y = breast_cancer.target
 
 variance_threshold = VarianceThreshold(
-  threshold=0.001 #features with variance lower than this will be removed
+  threshold=0.001 #features with variance lower then this will be removed
 ) 
 variance_threshold.fit(X)
 

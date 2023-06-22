@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 LDA is an algorithm for multi-class classification, that can be use as a dimensionality reduction technique.
 It's supervised learning technique that maximize the separation between different classes.
 
-PROS: it converts high dimensional data to low dimensional data, than prevents overfitting.
+PROS: it converts high dimensional data to low dimensional data, then it prevents overfitting.
 CONS: It requires normal distribution on features. 
 '''
 
