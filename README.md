@@ -120,6 +120,8 @@ docker exec -w /home/ML-py -it ml-py bash
     - Random Forest Importance
     - Lasso Regularization and Select From Model  
   
+  - Samples of optimization techniques integrations
+  
 **Unsupervised Learning**    
 
 1. Classification
