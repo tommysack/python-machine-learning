@@ -58,37 +58,16 @@ print("X train max", np.amax(X_train))
 print("X test max", np.amax(X_test))
 
 '''
-We want use:
-- SVM classification with LinearSVC
-- SGDClassifier to perform SGD in SVM classification
-- Randomize Search to tuning hyperparameters of SGDClassifier/LinearSVC
+We want to adopt:
+- Perceptron linear classifier
+- SGDClassifier to perform SGD in Perceptron linear classification
 - KFold to training with cross validation
 '''
 
 sgd_classifier = SGDClassifier(
-  loss="hinge", #log gives a LinearSVC
+  loss="perceptron", #perceptron gives a Perceptron linear classifier
   early_stopping=True
 ) 
-
-param_grid = { 
-  "penalty": ['l2', 'l1', 'elasticnet'],
-  "alpha": [0.0001, 0.001, 0.01, 0.1, 1, 10],  
-  "fit_intercept": [True, False],
-  "learning_rate": ["constant", "optimal", "invscaling", "adaptive"]
-}
-randomized_search_cv = RandomizedSearchCV(
-  estimator=sgd_classifier, 
-  param_distributions=param_grid, #dictionary with parameters names
-  cv=10 #num of folds in a KFold
-)
-randomized_search_cv.fit(X_train, Y_train)
-print(randomized_search_cv.best_params_)
-#Output:
-# {'penalty': 'elasticnet', 
-# 'learning_rate': 'optimal', 
-# 'fit_intercept': True, 
-# 'alpha': 0.01}
-sgd_classifier = randomized_search_cv.best_estimator_
 
 kfold = KFold(n_splits=10)
 
