@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 #It creates 200 points to distribute and nois 0.05 (two interleaving half circles)
-X, Y = make_moons(n_samples=200, noise=0.05) 
+X, Y = make_moons(n_samples=200, noise=0.1) 
 
 #General info
 np.unique(np.array(Y.tolist())) #array([0, 1]) => binary classification
@@ -38,7 +38,7 @@ DB scan steps:
         else 
           p is a noise_point and goes to the next point (step 2) 
 
-PROS: it doesn't require to predefine K parameter
+PROS: it doesn't require to predefine K parameter, and it can handle clusters that are not necessarily spherical or of uniform size
 CONS: it requires to predefine eps and MinPts parameters
 '''
 

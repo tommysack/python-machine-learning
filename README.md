@@ -66,15 +66,15 @@ docker exec -w /home/ML-py -it ml-py bash
 ## Data visualization
 
 - seaborn.regplot
-  - to draw data points and linear regression model 
+  - to draw two continue features and the relative linear regression model on two-dimension plane
 - seaborn.heatmap
-  - to display patterns and relationships in large datasets, the values of matrix are represented as colors
+  - to display relationships between all features in a matrix, the values of matrix are represented as colors
 - seaborn.countplot
-  - to draw bars representing counts of the categorical feature values
+  - to draw bars representing counts of a discrete feature
 - seaborn.barplot
-  - to draw bars, in categorical representing a mean, or an other estimator, of central tendency for a feature
+  - to draw bars representing values of continue feature y for a discrete feature x (but if y is discrete/categorical feature then representing a mean, or an other estimator, of central tendency for y)
 - seaborn.scatterplot
-  - to draw data points on two-plane, with hue to draw a classification with the colors
+  - to draw two continue features on two-dimension plane, with hue to draw one more discrete/categorical feature with the colors
 
 ## Source folder
 
