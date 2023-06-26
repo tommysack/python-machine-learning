@@ -23,7 +23,7 @@ reviews_df.isnull().sum()
 The data are phrases in natural language.
 The goal is to assign a class label Y (binary classification with values "pos" or "neg") to input X.
 In this case we use BernoulliNB that uses Naive Bayes algorithm and it works on Bernoulli distribution.
-It makes a linear binary probabilistic classifier. 
+It makes a non-linear binary probabilistic classifier. 
 '''
 
 #Separates data in numpy.ndarray columns data/target 

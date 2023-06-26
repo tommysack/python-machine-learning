@@ -98,12 +98,10 @@ docker exec -w /home/ML-py -it ml-py bash
     - Binary      
       - Logistic Regression
       - Support Vector Machines
-      - Bernoulli Naive Bayes
 
     - Multiclass      
       - Logistic Regression (one vs all)
       - Support Vector Machines (one vs all)      
-      - Multinomial Naive Bayes      
       - Linear Discriminant Analysis
 
   - Non linear
@@ -113,12 +111,14 @@ docker exec -w /home/ML-py -it ml-py bash
       - Decision Tree
       - Random Decision Forest
       - Multi-layer Perceptron 
+      - Bernoulli Naive Bayes      
 
     - Multiclass
       - K-nearest Neighbors
       - Decision Tree
       - Random Decision Forest
       - Multi-layer Perceptron 
+      - Multinomial Naive Bayes       
 
 3. Optimization techniques
 

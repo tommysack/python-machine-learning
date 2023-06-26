@@ -26,7 +26,7 @@ news_df.isnull().sum()
 The data are articles in natural language.
 The goal is to assign a class label Y (multi-class classification with values news_train.target_names) to input X.
 In this case we use MultinomialNB that uses Naive Bayes algorithm and it works on Multinomial distribution.
-It makes a linear multi-class probabilistic classifier. 
+It makes a non-linear multi-class probabilistic classifier. 
 '''
 
 #Separates data in rows train/test
