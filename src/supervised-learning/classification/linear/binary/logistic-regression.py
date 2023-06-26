@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib.pyplot as plt
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -20,13 +20,22 @@ breast_cancer_df.head()
 breast_cancer_df.describe() 
 breast_cancer_df.shape #31 columns, 569 rows
 sns.countplot(data=breast_cancer_df, x='diagnosis') #Ok, the classes are quite distributed
+plt.show()
 breast_cancer_df.isnull().sum() 
 np.isnan(breast_cancer_df.drop('diagnosis',axis=1)).any() #Many algorithms do work only with numerical data
 
-#Correlation between data/target (we assume moderate correlation from 0.5)
+#Correlation between features and class diagnosis (we assume moderate correlation from 0.5)
 breast_cancer_df.corr()['diagnosis'].sort_values() #There are many features mildly correlated with target
 
+#Draw correlation between numerical worst concave points, worst perimeter and class diagnosis
+sns.scatterplot(x=breast_cancer_df['worst concave points'], y=breast_cancer_df['worst perimeter'], hue=breast_cancer_df['diagnosis'], palette='viridis')
+plt.title("Correlation between worst concave points, worst perimeter and diagnosis")
+plt.xlabel("worst concave points")
+plt.ylabel("worst perimeter")
+plt.show()
+
 '''
+As you can see as worst concave points and worst perimeter increase, then diagnosis goes towards the value 0.
 I would try with Logistic Regression and all features.
 '''
 
@@ -68,8 +77,7 @@ print("X test max", np.amax(X_test))
 logistic_regression = LogisticRegression(
   penalty='l2', #L2 regularization to avoid overfitting 
   C=10.0, #inverse of regularization strength (C lower => Higher regularization)
-  solver='lbfgs', #algorithm to use
-  verbose=True
+  solver='lbfgs' #algorithm to use  
 ) 
 logistic_regression.fit(X_train, Y_train) 
 

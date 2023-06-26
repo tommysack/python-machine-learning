@@ -1,9 +1,12 @@
 import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.datasets import make_blobs
+from sklearn.metrics import calinski_harabasz_score,davies_bouldin_score
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 #It creates 250 points to distribute in clusters, with 3 features, 5 centroids and 0.8 cluster std deviation
-X, Y = make_blobs(n_samples=250, n_features=3, centers=5, cluster_std=0.8)
+X, Y = make_blobs(n_samples=250, n_features=2, centers=5, cluster_std=0.8)
 
 #General info
 np.unique(np.array(Y.tolist())) #array([0, 1, 2, 3, 4]) => multi-class classification
@@ -29,21 +32,31 @@ PROS: it works very well with big data
 CONS: it requires to define K (however prerequisite solvable with the Elbow method) and it does not allow for noisy data
 '''
 
-for k in range(1, 11):
+for k in range(2, 11):
 
   kmeans = KMeans(
     n_clusters=k, #num of clusters to form (and centroids to generate)
     init='k-means++', 
-    n_init= 10, #the algorithm will run n_init times with different centroid 
-    max_iter=2000 #every time (n_init) it iterates a maximum of 2000 times to converge
+    n_init= 10, #the algorithm will run n_init times with different centroid (because it is sensitive to the initial placement of centroids)
+    max_iter=2000 #every time of n_init it iterates a maximum of 2000 times to converge
   )    
   kmeans.fit(X)
 
   Y_predicted = kmeans.predict(X)
 
-  print("\n----------------------------")
+  #Draw correlation between the first two numerical features and class Y_predict
+  sns.scatterplot(x=X[:, 0], y=X[:, 1], hue=Y_predicted, palette='viridis')
+  plt.title("K-means Clustering result")
+  plt.xlabel("Feature 1")
+  plt.ylabel("Feature 2")
+  plt.show()  
+
   print("K=", k)
-  print("SSE: ", kmeans.inertia_) #sum of squared errors (single error: point distance from its nearest centroid)
+  print("SSE: ", kmeans.inertia_) 
+  ch_score = calinski_harabasz_score(X, Y_predicted)
+  print("Calinski/Harabasz score:", ch_score)
+  db_score = davies_bouldin_score(X, Y_predicted)
+  print("Davies Bouldin score:", db_score)
   print("Final position of centers:  ", kmeans.cluster_centers_) 
   print("Number of iterations to converge: ", kmeans.n_iter_) 
   print("Label classification of points: ", Y_predicted)
@@ -52,3 +65,5 @@ for k in range(1, 11):
 '''
 From k>5 SSE it doesn't drop as fast as before, then we can use 5 clusters.
 '''
+
+

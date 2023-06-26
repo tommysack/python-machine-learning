@@ -1,6 +1,9 @@
 import numpy as np
-from sklearn.cluster import AgglomerativeClustering, KMeans
+from sklearn.cluster import AgglomerativeClustering
 from sklearn.datasets import make_blobs
+from sklearn.metrics import calinski_harabasz_score,davies_bouldin_score
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 #It creates 250 points to distribute in clusters, with 3 features, 5 centroids and 0.8 cluster std deviation
 X, Y = make_blobs(n_samples=250, n_features=3, centers=5, cluster_std=0.8)
@@ -31,7 +34,23 @@ PROS: it doesn't require to predefine K parameter
 CONS: it's not better solution for large dataset
 '''
 
-agglomerative_clustering = AgglomerativeClustering() 
+agglomerative_clustering = AgglomerativeClustering(
+  n_clusters=6,
+  linkage='complete'
+) 
 
 Y_predicted = agglomerative_clustering.fit_predict(X)
+
+#Draw correlation between the first two numerical features and class Y_predict
+sns.scatterplot(x=X[:, 0], y=X[:, 1], hue=Y_predicted, palette='viridis')
+plt.title("Agglomerative Clustering result")
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 2")
+plt.show()
+
+ch_score = calinski_harabasz_score(X, Y_predicted)
+print("Calinski/Harabasz score:", ch_score)
+
+db_score = davies_bouldin_score(X, Y_predicted)
+print("Davies Bouldin score:", db_score)
 

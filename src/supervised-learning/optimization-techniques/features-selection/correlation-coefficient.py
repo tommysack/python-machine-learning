@@ -16,6 +16,7 @@ breast_cancer_df = pd.DataFrame(breast_cancer.data, columns=breast_cancer.featur
 
 breast_cancer_df_corr = breast_cancer_df.corr()
 
+#Draw correlation between all the features 
 plt.figure(figsize=(15, 15))
 sns.heatmap(breast_cancer_df_corr, cmap="viridis", annot=True, linewidths=0.5)
 

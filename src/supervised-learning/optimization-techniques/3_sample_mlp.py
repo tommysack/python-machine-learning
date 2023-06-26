@@ -24,13 +24,19 @@ sns.countplot(data=iris_df, x='target') #Ok, the classes are quite distributed
 iris_df.isnull().sum() 
 np.isnan(iris_df).any() 
 
-#Correlation between features (we assume moderate correlation from 0.5)
-iris_df_corr = iris_df.corr()
-plt.figure(figsize=(5, 5))
-sns.heatmap(iris_df_corr, cmap="viridis", annot=True, linewidths=0.5) 
+#Correlation between features and class target (we assume moderate correlation from 0.5)
+iris_df.corr()['target'].sort_values() #All features are at least mildly correlated with target
+
+#Draw correlation between numerical petal length, petal width and class target
+sns.scatterplot(x=iris_df['petal length (cm)'], y=iris_df['petal width (cm)'], hue=iris_df['target'], palette='viridis')
+plt.title("Correlation between petal length, petal width and target")
+plt.xlabel("petal length (cm)")
+plt.ylabel("petal width (cm)")
+plt.show()
 
 '''
-All the columns are moderatly correlated between them, however there are only 5 columns so I choose to keep them all
+As you can see as petal length and petal width increase, then target goes towards the value 2.
+However there are only 5 columns so I choose to keep them all.
 '''
 
 #Separates data in numpy.ndarray columns data/target 

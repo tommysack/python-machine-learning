@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib.pyplot as plt
 from sklearn.svm import LinearSVC
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
@@ -10,19 +10,6 @@ from sklearn.metrics import accuracy_score
 
 #Load data
 breast_cancer = load_breast_cancer()
-
-#General info
-print(breast_cancer.DESCR) #Cancers 31 columns of informations, e 1 column with the diagnosis
-breast_cancer_df = pd.DataFrame(breast_cancer.data, columns=breast_cancer.feature_names)
-breast_cancer_df['diagnosis'] = breast_cancer.target 
-breast_cancer_df['diagnosis'].unique() #array([0, 1]) => binary classification
-breast_cancer_df.head()
-breast_cancer_df.describe() 
-breast_cancer_df.shape #32 columns, 569 rows
-
-sns.countplot(data=breast_cancer_df, x='diagnosis') #Ok, the classes are quite distributed
-breast_cancer_df.isnull().sum() 
-np.isnan(breast_cancer_df.drop('diagnosis',axis=1)).any() #Many algorithms do work only with numerical data
 
 #General info
 print(breast_cancer.DESCR)
@@ -36,10 +23,18 @@ sns.countplot(data=breast_cancer_df, x='diagnosis') #Ok, the classes are quite d
 breast_cancer_df.isnull().sum() 
 np.isnan(breast_cancer_df.drop('diagnosis',axis=1)).any() #Many algorithms do work only with numerical data
 
-#Correlation between data/target (we assume moderate correlation from 0.5)
+#Correlation between features and class diagnosis (we assume moderate correlation from 0.5)
 breast_cancer_df.corr()['diagnosis'].sort_values() #There are many features mildly correlated with target
 
+#Draw correlation between numerical worst concave points, worst perimeter and class diagnosis
+sns.scatterplot(x=breast_cancer_df['worst concave points'], y=breast_cancer_df['worst perimeter'], hue=breast_cancer_df['diagnosis'], palette='viridis')
+plt.title("Correlation between worst concave points, worst perimeter and diagnosis")
+plt.xlabel("worst concave points")
+plt.ylabel("worst perimeter")
+plt.show()
+
 '''
+As you can see as worst concave points and worst perimeter increase, then diagnosis goes towards the value 0.
 I would try with Linear SVC and all features.
 '''
 

@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.datasets import load_breast_cancer
 from skfeature.function.similarity_based import fisher_score
 
@@ -20,8 +21,9 @@ Y = breast_cancer.target
 
 ranks = fisher_score.fisher_score(X, Y)
 
+#Draw the importances of all features
 breast_cancer_df_len = len(breast_cancer_df.columns)
 breast_cancer_df_importances = pd.Series(ranks, breast_cancer_df.columns[0:breast_cancer_df_len])
-breast_cancer_df_importances.plot(kind='barh', color='#BB0000', figsize=(5, 5))
+sns.barplot(x=breast_cancer_df_importances.values, y=breast_cancer_df_importances.index, color='#BB0000')
 plt.show()
 

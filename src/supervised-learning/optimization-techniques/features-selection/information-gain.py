@@ -1,4 +1,5 @@
 import pandas as pd
+import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.datasets import load_breast_cancer
 from sklearn.feature_selection import mutual_info_classif
@@ -19,7 +20,8 @@ Y = breast_cancer.target
 
 info_classif = mutual_info_classif(X, Y)
 
+#Draw the importances of all features
 breast_cancer_df_len = len(breast_cancer_df.columns)
 breast_cancer_df_importances = pd.Series(info_classif, breast_cancer_df.columns[0:breast_cancer_df_len])
-breast_cancer_df_importances.plot(kind='barh', color='#BB0000', figsize=(5, 5))
+sns.barplot(x=breast_cancer_df_importances.values, y=breast_cancer_df_importances.index, color='#BB0000')
 plt.show()

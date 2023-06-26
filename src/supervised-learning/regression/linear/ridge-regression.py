@@ -24,13 +24,14 @@ np.isnan(diabetes_df).any() #Many algorithms do work only with numerical data
 #Correlation between features and target (we assume moderate correlation from 0.5)
 diabetes_df.corr()['progression'].sort_values() #Moderate correlation with ltg and bmi 
 
-#Try to draw the correlation and the linear regression model fit
+#Draw correlation and the linear regression model fit between numerical ltg and numerical progression 
 plt.figure(figsize=(6, 6))
 sns.regplot(data=diabetes_df, x='ltg', y='progression', color='yellow', line_kws={"color": "red"})
 plt.title('Correlation and Linear Regression between ltg and progression')
 plt.xlabel('Ltg')
 plt.ylabel('Progression')
 
+#Draw correlation and the linear regression model fit between numerical bmi and numerical progression 
 plt.figure(figsize=(6, 6))
 sns.regplot(data=diabetes_df, x='bmi', y='progression', color='yellow', line_kws={"color": "red"})
 plt.title('Correlation and Linear Regression between bmi and progression')

@@ -17,7 +17,7 @@ docker start ml-py
 docker exec -w /home/ML-py -it ml-py bash 
 ```
 
-## Performance metrics used
+## Performance metrics 
 
 **Regression**
 
@@ -33,7 +33,7 @@ docker exec -w /home/ML-py -it ml-py bash
   - R2 = 1 - (SSR / SST) 
   - Best score is 1.0
 
-**Classification**
+**Supervised classification**
 
 - Accuracy score (The percentage of samples that were correctly classified)
   - Accuracy = Num of correct predictions / Total num of samples 
@@ -49,7 +49,34 @@ docker exec -w /home/ML-py -it ml-py bash
   - Log Loss = - (1 / num of samples) * Σ [Y * log(Y_predicted) + (1 - Y) * log(1 - Y_predicted)]
   - Best score is 0
 
-## The source folder
+**Unsupervised classification**
+
+- SSE (Inertia or Distorsion)
+  - Best score is 0
+
+- Calinski Harabasz score (Variance Ratio Criterion)
+  - BSS is Between-Cluster Sum of Squares
+  - WSS is Within-Cluster Sum of Squares
+  - Cal-inski-Harabasz = (BSS / WSS) * ((n_samples - k) / (k - 1))
+  - Higher score indicates better clustering 
+
+- Davies Bouldin score (Average similarity measure between clusters)
+  - Best score is 0
+
+## Data visualization
+
+- seaborn.regplot
+  - to draw data points and linear regression model 
+- seaborn.heatmap
+  - to display patterns and relationships in large datasets, the values of matrix are represented as colors
+- seaborn.countplot
+  - to draw bars representing counts of the categorical feature values
+- seaborn.barplot
+  - to draw bars, in categorical representing a mean, or an other estimator, of central tendency for a feature
+- seaborn.scatterplot
+  - to draw data points on two-plane, with hue to draw a classification with the colors
+
+## Source folder
 
 **Supervised Learning**
 

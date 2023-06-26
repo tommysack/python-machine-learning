@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import seaborn as sns
+import matplotlib.pyplot as plt
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -26,8 +27,6 @@ random_forest_classifier = RandomForestClassifier(
 )
 random_forest_classifier.fit(X, Y)
 
-importances_df = pd.DataFrame({"features": digits.feature_names, "importances": random_forest_classifier.feature_importances_}).sort_values('importances')
-importances_df.plot.bar()
-
-
-
+#Draw the importances of all features
+sns.barplot(x=digits.feature_names, y=random_forest_classifier.feature_importances_, color='#BB0000')
+plt.show()

@@ -1,6 +1,9 @@
 import numpy as np
 from sklearn.datasets._samples_generator import make_moons
 from sklearn.cluster import DBSCAN
+from sklearn.metrics import calinski_harabasz_score,davies_bouldin_score
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 #It creates 200 points to distribute and nois 0.05 (two interleaving half circles)
 X, Y = make_moons(n_samples=200, noise=0.05) 
@@ -45,5 +48,19 @@ dbscan = DBSCAN(
 )
 
 Y_predicted = dbscan.fit_predict(X)
+
+#Draw correlation between the first two numerical features and class Y_predict
+sns.scatterplot(x=X[:, 0], y=X[:, 1], hue=Y_predicted, palette='viridis')
+plt.title("DB Scan result")
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 2")
+plt.show()
+
+ch_score = calinski_harabasz_score(X, Y_predicted)
+print("Calinski/Harabasz score:", ch_score)
+
+db_score = davies_bouldin_score(X, Y_predicted)
+print("Davies Bouldin score:", db_score)
+
 
 

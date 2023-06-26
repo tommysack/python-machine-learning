@@ -1,10 +1,7 @@
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import log_loss
 from sklearn.metrics import accuracy_score
 
 #Load data
@@ -18,15 +15,17 @@ passengers_df['Survived'].unique() #array([0, 1]) => binary classification (Not 
 sns.countplot(data=passengers_df, x='Survived') #The 1 class are many more than 0 class
 passengers_df.isnull().sum() 
 
-#Correlation between features and target (we assume moderate correlation from 0.5)
+#Correlation between features and class Survived (we assume moderate correlation from 0.5)
 passengers_df= passengers_df.drop("Name",axis=1) #Drop column Name that is clearly irrelevant
 mapping_sex = {'male': 0, 'female': 1}
 passengers_df['Sex'] = passengers_df['Sex'].map(mapping_sex)
 passengers_df.corr()['Survived'].sort_values() #There may be a correlation with Age, Pclass and Sex
+
+#Draw correlation between classes Sex, Pclass, Age and class Survived
 sns.barplot(data=passengers_df, x='Sex', y='Survived') #The female(1) have survival average more than male(0)
 sns.barplot(data=passengers_df, x='Pclass', y='Survived') #The Pclass(3) flu the survival average 
 def map_age(age): 
-    return round(age / 10)
+  return round(age / 10)
 passengers_df['Age_block'] = passengers_df['Age'].apply(lambda age: map_age(age))
 sns.barplot(data=passengers_df, x='Age_block', y='Survived')
 sns.barplot(data=passengers_df, x='Age_block', y='Survived', hue='Sex') #The Age flu the survival average
