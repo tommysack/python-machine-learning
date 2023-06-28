@@ -1,5 +1,5 @@
 #Data
-data/
+*.csv
 
 # Compiled Python bytecode
 *.py[cod]
