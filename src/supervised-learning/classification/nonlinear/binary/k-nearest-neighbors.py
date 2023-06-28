@@ -41,7 +41,6 @@ I would try with K-NN and all features.
 '''
 The data are points in an hyperspace H of 32 dimensions.
 The goal is to assign a class label Y (binary classification with values "M" or "B") to input X.
-Technically you need to find the "best" hypercurve of 31 dimensions which best separates the points classified in H.
 In this case we use K-NN classification that assign a class to a point based on the classes of k neighboring points
 (very low k => overfitting). In training phase K-NN does not learn any model ("lazy") but it only stores the points, 
 and the predictions are made just-in-time by calculating the similarity. 

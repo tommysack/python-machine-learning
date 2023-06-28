@@ -41,8 +41,7 @@ I would try with Multi-layer perceptron classifier and the features Age, Pclass 
 '''
 The data are points in an hyperspace H of 8 dimensions.
 The goal is to assign a class label Y (binary classification with values 0 or 1) to input X.
-Technically you need to find the "best" hypercurve of 7 dimensions which best separates the points classified in H.
-The "best": in this case we use  MLPClassifier that uses "solver" to to minimize Log Loss.
+In this case we use  MLPClassifier that uses "solver" to to minimize Log Loss.
 It make a non-linear binary (but is possible multi-class) probabilistic classifier. 
 '''
 
