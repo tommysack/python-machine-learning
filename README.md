@@ -2,7 +2,7 @@
 
 ## How to start project
 
-If you use VS Code, than you don't need start container. VS Code open folder in container for you.
+If you use VS Code, then you don't need start container. VS Code open folder in container for you.
 Otherwise to start "ml-py" container and exec bash into container:
 
 ```
